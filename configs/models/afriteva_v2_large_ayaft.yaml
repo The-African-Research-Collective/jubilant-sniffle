@@ -1,6 +1,8 @@
 model_name: taresco/afriteva_v2_large_ayaft
-trust_remote_code: true
+trust_remote_code: false
 parallelize: false
+add_bos_token: false
+model_type: hf
 languages_supported:
   - swa  # Swahili
   - amh  # Amharic
@@ -10,5 +12,3 @@ languages_supported:
   - zul  # Zulu
   - som  # Somali
   - afr  # Afrikaans
-  - lin  # Lingala
-  - run  # Rundi
