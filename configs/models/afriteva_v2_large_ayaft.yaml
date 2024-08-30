@@ -1,0 +1,14 @@
+model_name: taresco/afriteva_v2_large_ayaft
+trust_remote_code: true
+parallelize: false
+languages_supported:
+  - swa  # Swahili
+  - amh  # Amharic
+  - hau  # Hausa
+  - ibo  # Igbo
+  - yor  # Yoruba
+  - zul  # Zulu
+  - som  # Somali
+  - afr  # Afrikaans
+  - lin  # Lingala
+  - run  # Rundi
