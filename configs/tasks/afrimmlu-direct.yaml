@@ -3,7 +3,7 @@ task_template: afrimmlu_direct_{{language}}
 wandb_project: llm-evaluation-afrimmlu-direct
 wandb_job_type: eval
 languages:
-  - eng
+  - yor
   # - ewe
   # - fra
   # - hau
