@@ -210,6 +210,17 @@ tests = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4
 tests-mypy = ["mypy (>=1.11.1)", "pytest-mypy-plugins"]
 
 [[package]]
+name = "cachetools"
+version = "5.5.0"
+description = "Extensible memoizing collections and decorators"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "cachetools-5.5.0-py3-none-any.whl", hash = "sha256:02134e8439cdc2ffb62023ce1debca2944c3f289d66bb17ead3ab3dede74b292"},
+    {file = "cachetools-5.5.0.tar.gz", hash = "sha256:2cc24fb4cbe39633fb7badd9db9ca6295d766d9c2995f245725a46715d050f2a"},
+]
+
+[[package]]
 name = "certifi"
 version = "2024.8.30"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -1518,6 +1529,17 @@ files = [
 nvidia-nvjitlink-cu12 = "*"
 
 [[package]]
+name = "nvidia-ml-py"
+version = "12.535.161"
+description = "Python Bindings for the NVIDIA Management Library"
+optional = false
+python-versions = "*"
+files = [
+    {file = "nvidia-ml-py-12.535.161.tar.gz", hash = "sha256:2bcc31ff7a0ea291ed8d7fc39b149391a42c2fb1cb4256c935e692de488b4d17"},
+    {file = "nvidia_ml_py-12.535.161-py3-none-any.whl", hash = "sha256:69137b137c3c6f6185361346f02d9865c1f1b6754dfd0d34800516761c4e45af"},
+]
+
+[[package]]
 name = "nvidia-nccl-cu12"
 version = "2.20.5"
 description = "NVIDIA Collective Communication Library (NCCL) Runtime"
@@ -1550,6 +1572,43 @@ files = [
     {file = "nvidia_nvtx_cu12-12.1.105-py3-none-manylinux1_x86_64.whl", hash = "sha256:dc21cf308ca5691e7c04d962e213f8a4aa9bbfa23d95412f452254c2caeb09e5"},
     {file = "nvidia_nvtx_cu12-12.1.105-py3-none-win_amd64.whl", hash = "sha256:65f4d98982b31b60026e0e6de73fbdfc09d08a96f4656dd3665ca616a11e1e82"},
 ]
+
+[[package]]
+name = "nvitop"
+version = "1.3.2"
+description = "An interactive NVIDIA-GPU process viewer and beyond, the one-stop solution for GPU process management."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "nvitop-1.3.2-py3-none-any.whl", hash = "sha256:be61c3375c99c2d871bf87f46e7969c89da730593c14734120de4f16203022e8"},
+    {file = "nvitop-1.3.2.tar.gz", hash = "sha256:9ea401dfca6b268cf30c041e428f461aab31e4bc5e17bc8e923568e16c9cb1f1"},
+]
+
+[package.dependencies]
+cachetools = ">=1.0.1"
+colorama = {version = ">=0.4.0", markers = "platform_system == \"Windows\""}
+nvidia-ml-py = ">=11.450.51,<12.536.0a0"
+psutil = ">=5.6.6"
+termcolor = ">=1.0.0"
+windows-curses = {version = ">=2.2.0", markers = "platform_system == \"Windows\""}
+
+[package.extras]
+cuda10 = ["nvidia-ml-py (==11.450.51)"]
+lint = ["black (>=22.6.0)", "isort", "mypy", "pre-commit", "pylint[spelling] (>=2.16.0)", "typing-extensions"]
+pynvml-11-450-129 = ["nvidia-ml-py (==11.450.129)"]
+pynvml-11-450-51 = ["nvidia-ml-py (==11.450.51)"]
+pynvml-11-460-79 = ["nvidia-ml-py (==11.460.79)"]
+pynvml-11-470-66 = ["nvidia-ml-py (==11.470.66)"]
+pynvml-11-495-46 = ["nvidia-ml-py (==11.495.46)"]
+pynvml-11-510-69 = ["nvidia-ml-py (==11.510.69)"]
+pynvml-11-515-48 = ["nvidia-ml-py (==11.515.48)"]
+pynvml-11-515-75 = ["nvidia-ml-py (==11.515.75)"]
+pynvml-11-525-112 = ["nvidia-ml-py (==11.525.112)"]
+pynvml-11-525-131 = ["nvidia-ml-py (==11.525.131)"]
+pynvml-11-525-84 = ["nvidia-ml-py (==11.525.84)"]
+pynvml-12-535-108 = ["nvidia-ml-py (==12.535.108)"]
+pynvml-12-535-133 = ["nvidia-ml-py (==12.535.133)"]
+pynvml-12-535-77 = ["nvidia-ml-py (==12.535.77)"]
 
 [[package]]
 name = "packaging"
@@ -2424,6 +2483,20 @@ files = [
 test = ["pytest (>=6.0.1)", "pytest-md-report (>=0.5)"]
 
 [[package]]
+name = "termcolor"
+version = "2.4.0"
+description = "ANSI color formatting for output in terminal"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "termcolor-2.4.0-py3-none-any.whl", hash = "sha256:9297c0df9c99445c2412e832e882a7884038a25617c60cea2ad69488d4040d63"},
+    {file = "termcolor-2.4.0.tar.gz", hash = "sha256:aab9e56047c8ac41ed798fa36d892a37aca6b3e9159f3e0c24bc64a9b3ac7b7a"},
+]
+
+[package.extras]
+tests = ["pytest", "pytest-cov"]
+
+[[package]]
 name = "threadpoolctl"
 version = "3.5.0"
 description = "threadpoolctl"
@@ -2808,6 +2881,29 @@ socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
+name = "windows-curses"
+version = "2.3.3"
+description = "Support for the standard curses module on Windows"
+optional = false
+python-versions = "*"
+files = [
+    {file = "windows_curses-2.3.3-cp310-cp310-win32.whl", hash = "sha256:859011e77d7d9d9eaabb4fe081760cec966454bdea18a9f3a98e6d10e802fb61"},
+    {file = "windows_curses-2.3.3-cp310-cp310-win_amd64.whl", hash = "sha256:cb0eaf41b90c0b7e33269a6cf34900d8b0d7f3fcf2c1f9dd8191bac11955b711"},
+    {file = "windows_curses-2.3.3-cp311-cp311-win32.whl", hash = "sha256:3b3d01720724532794e81f0496d18c1284791b6e5b1fa7a59ec878d1c5134dde"},
+    {file = "windows_curses-2.3.3-cp311-cp311-win_amd64.whl", hash = "sha256:a5d90950656fc0d85aa3d395ec7f454cc7136add512d40a9c5e8ff29a0ce4905"},
+    {file = "windows_curses-2.3.3-cp312-cp312-win32.whl", hash = "sha256:e24b68a1c029d3ff521cf9325ba0f533b303e22ed148952a5a5e6396f29f536c"},
+    {file = "windows_curses-2.3.3-cp312-cp312-win_amd64.whl", hash = "sha256:eaea51f169d9940a9bad1edda1759f63795daeb2174b2a45c895148058970689"},
+    {file = "windows_curses-2.3.3-cp36-cp36m-win32.whl", hash = "sha256:0d7fb1d799ce3458c9e7215ffa2e8c5e347dabeef1227350b62db6030ebd4c24"},
+    {file = "windows_curses-2.3.3-cp36-cp36m-win_amd64.whl", hash = "sha256:1db4246cc019d31614d29e0a26bb8792b0a1a9ba4fbb82ceaf85e5607c7a2857"},
+    {file = "windows_curses-2.3.3-cp37-cp37m-win32.whl", hash = "sha256:cb654716c400b24c6410e09415ea682307cf874ee76b109d9c6587a42ac7ed62"},
+    {file = "windows_curses-2.3.3-cp37-cp37m-win_amd64.whl", hash = "sha256:ba4a6a0d2d56ad834a1241fb5ce83186322cca87295ef4a768ede870ad33d597"},
+    {file = "windows_curses-2.3.3-cp38-cp38-win32.whl", hash = "sha256:a3604136cc0284e2284c7172bb81ba6ff914f820c2eb156e5dde71dafd98fff9"},
+    {file = "windows_curses-2.3.3-cp38-cp38-win_amd64.whl", hash = "sha256:15d148658e8967fd3826c907c4ad094d35a7a3605eb0e2d1bbad0b5c81b9df9f"},
+    {file = "windows_curses-2.3.3-cp39-cp39-win32.whl", hash = "sha256:b61d1d949b508de4e73e8b4848e243c5d9de691c242b2c8d458a991e5e80ad18"},
+    {file = "windows_curses-2.3.3-cp39-cp39-win_amd64.whl", hash = "sha256:23b71f3a44cc5a5b92e12d3a519e840e54f8252ff3ef867b630963d5fe7124dd"},
+]
+
+[[package]]
 name = "word2number"
 version = "1.1"
 description = "Convert number words eg. three hundred and forty two to numbers (342)."
@@ -3167,4 +3263,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "350f49aca7732ac8f37fa7c9c4a2b8462ab61b5c9cf418a31cb69a5306fa2837"
+content-hash = "966ff922b4553fa19adbb700a0bf63a5f28bf80036919bd11b1856a419bc61ca"

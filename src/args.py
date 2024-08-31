@@ -55,6 +55,8 @@ class EvaluationConfig(BaseConfig):
     fewshot_random_seed: int = field(default=42)
     use_cache: bool = field(default=True)
     log_samples: bool = field(default=True)
+    write_out: bool = field(default=False)
+    limit: int = field(default=-1)
 
 
 @dataclass_json
@@ -63,8 +65,6 @@ class ScriptConfig(BaseConfig):
     model: ModelConfig = field(default_factory=ModelConfig)
     task: TaskConfig = field(default_factory=TaskConfig)
     eval: EvaluationConfig = field(default_factory=EvaluationConfig)
-    write_out: bool = field(default=False)
-    limit: Optional[int] = field(default=None)
     model_config_yaml: Optional[str] = field(default=None)
     task_config_yaml: Optional[str] = field(default=None)
 

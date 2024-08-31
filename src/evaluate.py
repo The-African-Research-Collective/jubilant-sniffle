@@ -19,6 +19,7 @@ def main():
     logger.info(f"Batch size: {config.eval.batch_size}")
     logger.info(f"Random seed: {config.eval.random_seed}")
     logger.info(f"Use cache: {config.eval.use_cache}")
+    logger.info(f"num_fewshot: {config.eval.num_fewshot}")
 
 
     input_model_string = build_model_input_string(config.model)
@@ -37,11 +38,13 @@ def main():
         numpy_random_seed=config.eval.numpy_random_seed,
         torch_random_seed=config.eval.torch_random_seed,
         fewshot_random_seed=config.eval.fewshot_random_seed,
-        write_out=config.write_out,
-        limit=config.limit
+        write_out=config.eval.write_out,
+        limit=config.eval.limit
     )
 
-    if not config.limit and not config.write_out:
+    logger.info(f"Results: {results}")
+
+    if config.eval.limit != -1 and not config.eval.write_out:
         wandb_logger = WandbLogger(
             project=config.task.wandb_project,
             job_type=config.task.wandb_job_type
