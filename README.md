@@ -1,5 +1,13 @@
 # LLM Evaluation for African Languages
 
+## Setup
+
+This repo is Poetry compatible. To install the dependencies, ensure you have Poetry installed and run:
+
+```bash
+poetry install
+```
+
 ## Description
 
 This project is aimed at creating a standard evaluation library and scripts for assessing the performance of language models on tasks related to African languages. This project builds upon the [lm-evaluation-harness by EleutherAI](https://github.com/EleutherAI/lm-evaluation-harness), extending its capabilities to focus on African language tasks. Some of the tasks contained in this leaderboard have already been built into the harness (e.g. IrokoBench Tasks) but we make some slight modifications to some tasks such as 
@@ -37,7 +45,7 @@ Multiple choice tasks are tasks where the model is given a prompt and a list of 
 
 ### How does LM-Harness evaluate multiple choice tasks?
 
-For multiple-choice questions, in the log-probability mode, the framework creates a set of input and output pairs using the input prompt and check the probablity of generation of each of the choices. The choice with the highest probability is selected as the answer. The framework selects the choice with the highest probability as the answer and checks if it is the correct answer.
+For multiple-choice questions, in the log-probability mode, the framework creates a set of input and output pairs using the input prompt and check the probablity of generation of each of the choices. The choice with the highest probability is selected as the answer. The framework selects the choice with the highest probability as the answer and checks if it is the correct answer. This approach is [detailed in this blog post](https://blog.eleuther.ai/multiple-choice-normalization/)
 
 For example, using the sample AfriMMLU prompt above, the framework will generate the following input-output pairs:
 
@@ -118,3 +126,13 @@ p = 24: 0.00000000000000706066
 The choice with the highest probability is: p = 12
 ```
 </details>
+
+To run this evaluation on one sample from AfriMMLU and investigate the output, you can run the following command:
+
+```bash
+python src/evaluate.py \
+    --model-config-yaml configs/models/meta_llama_8b_instruct.yaml \
+    --task-config-yaml configs/tasks/afrimmlu-direct.yaml \
+    --eval.num-fewshot 0 \
+    --eval.limit 1
+```

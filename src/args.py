@@ -27,6 +27,16 @@ class BaseConfig:
 @dataclass_json
 @dataclass
 class TaskConfig(BaseConfig):
+    """
+    TaskConfig class represents the configuration for a task.
+
+    Attributes:
+        task_name (str): The name of the task. Default is "default_task".
+        languages (List[str]): The list of languages for the task. Default is an empty list.
+        task_template (str): The template for the task. Default is an empty string.
+        wandb_project (str): The name of the Weights & Biases project. Default is "default_project".
+        wandb_job_type (str): The type of the Weights & Biases job. Default is "eval".
+    """
     task_name: str = field(default="default_task")
     languages: List[str] = field(default_factory=list)
     task_template: str = field(default="")
@@ -36,6 +46,17 @@ class TaskConfig(BaseConfig):
 @dataclass_json
 @dataclass
 class ModelConfig(BaseConfig):
+    """
+    Configuration class for the model.
+
+    Attributes:
+        model_name (str): The name of the model. Default is "default_model".
+        languages_supported (List[str]): The list of supported languages. Default is an empty list.
+        model_type (str): The type of the model. Default is "hf".
+        trust_remote_code (bool): Whether to trust remote code. Default is False.
+        parallelize (bool): Whether to parallelize the model. Default is False.
+        add_bos_token (bool): Whether to add a beginning of sentence token. Default is False.
+    """
     model_name: str = field(default="default_model")
     languages_supported: List[str] = field(default_factory=list)
     model_type: str = field(default="hf")
@@ -46,6 +67,22 @@ class ModelConfig(BaseConfig):
 @dataclass_json
 @dataclass
 class EvaluationConfig(BaseConfig):
+    """
+    Configuration class for evaluation settings.
+
+    Attributes:
+        batch_size (int): The batch size for evaluation. Default is 8.
+        max_batch_size (int): The maximum batch size for evaluation. Default is 8.
+        num_fewshot (int): The number of few-shot examples for evaluation. Default is 0.
+        random_seed (int): The random seed for evaluation. Default is 42.
+        numpy_random_seed (int): The random seed for numpy library. Default is 42.
+        torch_random_seed (int): The random seed for torch library. Default is 42.
+        fewshot_random_seed (int): The random seed for few-shot examples. Default is 42.
+        use_cache (bool): Whether to use cache for evaluation. Default is True.
+        log_samples (bool): Whether to log evaluation samples. Default is True.
+        write_out (bool): Whether to write out evaluation results. Default is False.
+        limit (int): The limit for evaluation. Default is -1.
+    """
     batch_size: int = field(default=8)
     max_batch_size: int = field(default=8)
     num_fewshot: int = field(default=0)
@@ -56,12 +93,26 @@ class EvaluationConfig(BaseConfig):
     use_cache: bool = field(default=True)
     log_samples: bool = field(default=True)
     write_out: bool = field(default=False)
-    limit: int = field(default=-1)
+    limit: int = field(default=None)
 
 
 @dataclass_json
 @dataclass
 class ScriptConfig(BaseConfig):
+    """
+    Configuration class for script execution.
+    Attributes:
+        model (ModelConfig): Configuration for the model.
+        task (TaskConfig): Configuration for the task.
+        eval (EvaluationConfig): Configuration for evaluation.
+        model_config_yaml (Optional[str]): Path to YAML file for model configuration.
+        task_config_yaml (Optional[str]): Path to YAML file for task configuration.
+    Methods:
+        add_args(parser: argparse.ArgumentParser) -> None:
+            Adds command-line arguments to the parser based on the configuration attributes.
+        from_args() -> 'ScriptConfig':
+            Creates an instance of ScriptConfig based on the command-line arguments.
+    """
     model: ModelConfig = field(default_factory=ModelConfig)
     task: TaskConfig = field(default_factory=TaskConfig)
     eval: EvaluationConfig = field(default_factory=EvaluationConfig)

@@ -31,7 +31,7 @@ def main():
         model_args=input_model_string,
         tasks=task_list,
         log_samples=config.eval.log_samples,
-        num_fewshot=config.eval.num_fewshot,
+        num_fewshot=config.eval.num_fewshot if config.eval.num_fewshot > 0 else None,
         batch_size=config.eval.batch_size,
         max_batch_size=config.eval.max_batch_size,
         random_seed=config.eval.random_seed,
