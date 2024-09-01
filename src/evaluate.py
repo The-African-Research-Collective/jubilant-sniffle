@@ -41,7 +41,7 @@ def main():
         write_out=config.eval.write_out,
         limit=config.eval.limit
     )
-    
+
     if config.eval.limit != -1 and not config.eval.write_out:
         wandb_logger = WandbLogger(
             project=config.task.wandb_project,

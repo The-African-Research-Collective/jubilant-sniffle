@@ -8,8 +8,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 dataclasses-json = "^0.6.7"
-lm-eval = "^0.4.3"
 nvitop = "^1.3.2"
+lm-eval = { path = "lm-evaluation-harness", develop = true }
 
 
 [build-system]
