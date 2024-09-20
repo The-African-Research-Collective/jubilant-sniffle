@@ -1,0 +1,23 @@
+task_name: afrixnli_en_direct
+task_template: afrixnli_en_direct_{{language}}
+wandb_project: llm-evaluation-afrixnli-en-direct
+wandb_job_type: eval
+languages:
+  - amh
+  - eng
+  - ewe
+  - fra
+  - hau
+  - ibo
+  - kin
+  - lin
+  - lug
+  - orm
+  - sna
+  - sot
+  - swa
+  - twi
+  - wol
+  - xho
+  - yor
+  - zul

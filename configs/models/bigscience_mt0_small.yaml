@@ -1,0 +1,7 @@
+model_name: bigscience/mt0-small
+trust_remote_code: false
+parallelize: false
+add_bos_token: false
+model_type: hf
+languages_supported:
+  - eng

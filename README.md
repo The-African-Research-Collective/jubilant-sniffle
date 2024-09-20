@@ -10,7 +10,7 @@ poetry install
 
 ## Description
 
-This project is aimed at creating a standard evaluation library and scripts for assessing the performance of language models on tasks related to African languages. This project builds upon the [lm-evaluation-harness by EleutherAI](https://github.com/EleutherAI/lm-evaluation-harness), extending its capabilities to focus on African language tasks. Some of the tasks contained in this leaderboard have already been built into the harness (e.g. IrokoBench Tasks) but we make some slight modifications to some tasks such as 
+This project is aimed at creating a standard evaluation library and scripts for assessing the performance of language models on tasks related to African languages. This project uses the [lm-evaluation-harness by EleutherAI](https://github.com/EleutherAI/lm-evaluation-harness) for evaluation, focusing on African language tasks. Some of the tasks contained in this leaderboard have already been built into the harness (e.g. IrokoBench Tasks & Belebele) but we make some slight modifications to some tasks such as 
 
 - Improving the formatting of the prompts because language models have been shown to be sensitive to the formatting of the prompts ([Sclar et al.](https://arxiv.org/pdf/2310.11324)). Specifically, we strip the prompt of excess whitespace and whitelines and next-line characters.
 
@@ -134,5 +134,6 @@ python src/evaluate.py \
     --model-config-yaml configs/models/meta_llama_8b_instruct.yaml \
     --task-config-yaml configs/tasks/afrimmlu-direct.yaml \
     --eval.num-fewshot 0 \
-    --eval.limit 1
+    --eval.limit 1 \
+    --eval.write-out
 ```

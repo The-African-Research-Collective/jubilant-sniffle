@@ -1,0 +1,7 @@
+model_name: bigscience/bloomz
+trust_remote_code: false
+parallelize: true
+add_bos_token: false
+model_type: hf
+languages_supported:
+  - eng
