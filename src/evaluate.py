@@ -72,6 +72,7 @@ def main():
 
     # # Log the results to wandb as metrics
     config_dict = {k: v for k, v in results['config'].items() if isinstance(v, (str, int))}
+    config_dict['num_fewshot'] = config.eval.num_fewshot
 
     wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type)
     
