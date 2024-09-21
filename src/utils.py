@@ -3,6 +3,7 @@ import logging
 
 from args import ModelConfig, TaskConfig
 from typing import List
+from collections import defaultdict
 
 logger = logging.getLogger(__name__)
 REQUIRED_ENV_VARS = ['CUDA_VISIBLE_DEVICES']
@@ -61,6 +62,13 @@ def generate_lang_task_list(task_config: TaskConfig) -> List[str]:
 
     """
     lang_task_list = []
-    for lang in task_config.languages:
-        lang_task_list.append(task_config.task_template.replace("{{language}}", lang))
-    return lang_task_list
+    language_2_task = defaultdict(list)
+
+    templates = task_config.task_template.split(',')
+
+    for template in templates:
+        for lang in task_config.languages:
+            lang_task_list.append(template.replace("{{language}}", lang))
+            language_2_task[lang].append(template.replace("{{language}}", lang))
+    
+    return lang_task_list, language_2_task

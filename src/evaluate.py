@@ -1,14 +1,19 @@
 import os
+import json
+import wandb
 import lm_eval
 import logging
+import pandas as pd
+import numpy as np
 from args import load_config
 from utils import build_model_input_string, generate_lang_task_list
-from lm_eval.loggers import WandbLogger
+
 
 logging.basicConfig(level = logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+METRICS = [ 'acc', 'f1', 'acc_stderr']
 
 
 def main():
@@ -21,10 +26,10 @@ def main():
     logger.info(f"Use cache: {config.eval.use_cache}")
     logger.info(f"num_fewshot: {config.eval.num_fewshot}")
 
-
     input_model_string = build_model_input_string(config.model)
-    task_list = generate_lang_task_list(config.task)
+    task_list, lang_2_task = generate_lang_task_list(config.task)
 
+    print(f"Task list: {task_list}")
 
     results = lm_eval.simple_evaluate(
         model=config.model.model_type,
@@ -42,14 +47,37 @@ def main():
         limit=config.eval.limit
     )
 
-    if config.eval.limit != -1 and not config.eval.write_out:
-        wandb_logger = WandbLogger(
-            project=config.task.wandb_project,
-            job_type=config.task.wandb_job_type
-        )
-        wandb_logger.post_init(results)
-        wandb_logger.log_eval_result()
-        wandb_logger.log_eval_samples(results["samples"])
+    metric_results = results['results']
+
+    metrics_list = []
+    for lang, tasks in lang_2_task.items():
+
+        for task in tasks:
+            lang_metrics = {'lang': lang, 'task': task}
+            for metric, value in metric_results[task].items():
+                if metric != 'alias':
+                    lang_metrics[metric.replace(',none', '')] = value
+            
+            metrics_list.append(lang_metrics)
+    
+    metrics_df = pd.DataFrame(metrics_list)
+    metrics_df = metrics_df.groupby('lang').agg({ metric :'mean' for metric in METRICS }).reset_index()
+
+    metrics_config_dict = {}
+
+    for _, rows in metrics_df.iterrows():
+        lang = rows['lang']
+        for metric in METRICS:
+            metrics_config_dict[f"{lang}_{metric}"] = rows[metric]
+
+    # # Log the results to wandb as metrics
+    config_dict = {k: v for k, v in results['config'].items() if isinstance(v, (str, int))}
+
+    wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type)
+    
+    wandb.log(metrics_config_dict)
+    wandb.log(config_dict)
+
 
 if __name__ == "__main__":
     main()

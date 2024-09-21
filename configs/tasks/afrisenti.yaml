@@ -1,0 +1,19 @@
+task_name: afrisenti
+task_template: afrisenti_{{language}}_prompt_1,afrisenti_{{language}}_prompt_2,afrisenti_{{language}}_prompt_3,afrisenti_{{language}}_prompt_4,afrisenti_{{language}}_prompt_5
+wandb_project: afribench-afrisenti
+wandb_job_type: eval
+languages:
+  - amh
+  - arq
+  - ary
+  - hau
+  - ibo
+  - kin
+  - orm
+  - pcm
+  - por
+  - swa
+  - tir
+  - tso
+  - twi
+  - yor
