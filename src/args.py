@@ -78,6 +78,7 @@ class EvaluationConfig(BaseConfig):
         numpy_random_seed (int): The random seed for numpy library. Default is 42.
         torch_random_seed (int): The random seed for torch library. Default is 42.
         fewshot_random_seed (int): The random seed for few-shot examples. Default is 42.
+        device (str): Sets which device to place the model onto. Defaults to "cuda"
         use_cache (bool): Whether to use cache for evaluation. Default is True.
         log_samples (bool): Whether to log evaluation samples. Default is True.
         write_out (bool): Whether to write out evaluation results. Default is False.
@@ -90,10 +91,12 @@ class EvaluationConfig(BaseConfig):
     numpy_random_seed: int = field(default=42)
     torch_random_seed: int = field(default=42)
     fewshot_random_seed: int = field(default=42)
+    device: str = field(default='cuda')
     use_cache: bool = field(default=True)
     log_samples: bool = field(default=True)
     write_out: bool = field(default=False)
     limit: int = field(default=None)
+    
 
 
 @dataclass_json

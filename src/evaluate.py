@@ -28,13 +28,17 @@ def main():
 
     input_model_string = build_model_input_string(config.model)
     task_list, lang_2_task = generate_lang_task_list(config.task)
+    print(f"task list: {task_list}\nlang_2_task: {lang_2_task}")
 
     print(f"Task list: {task_list}")
+
+    print(f"device: {config.eval.log_samples}")
 
     results = lm_eval.simple_evaluate(
         model=config.model.model_type,
         model_args=input_model_string,
         tasks=task_list,
+        device=config.eval.device,
         log_samples=config.eval.log_samples,
         num_fewshot=config.eval.num_fewshot if config.eval.num_fewshot > 0 else None,
         batch_size=config.eval.batch_size,
@@ -48,6 +52,7 @@ def main():
     )
 
     metric_results = results['results']
+    print(metric_results)
 
     metrics_list = []
     for lang, tasks in lang_2_task.items():
@@ -59,8 +64,15 @@ def main():
                     lang_metrics[metric.replace(',none', '')] = value
             
             metrics_list.append(lang_metrics)
-    
+    print(f"metric list {metrics_list}")
     metrics_df = pd.DataFrame(metrics_list)
+
+    results_dir = f"../results/{config.task.task_name}/{config.eval.num_fewshot}/" if config.eval.num_fewshot > 0 else f"../results/{config.task.task_name}/0"
+    os.makedirs(results_dir, exist_ok=True)
+    filename = f"{config.model.model_name.split('/')[-1]}.csv"
+
+    metrics_df.to_csv(f'{results_dir}/{filename}', index=False)
+
     metrics_df = metrics_df.groupby('lang').agg({ metric :'mean' for metric in METRICS }).reset_index()
 
     metrics_config_dict = {}
@@ -69,15 +81,17 @@ def main():
         lang = rows['lang']
         for metric in METRICS:
             metrics_config_dict[f"{lang}_{metric}"] = rows[metric]
-
+    print(f"metrics config list: {metrics_config_dict}")
+    print(f"result configs: {results['config']}")
     # # Log the results to wandb as metrics
     config_dict = {k: v for k, v in results['config'].items() if isinstance(v, (str, int))}
+    print(f"config dict: {config_dict}")
     config_dict['num_fewshot'] = config.eval.num_fewshot
 
-    wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type)
+    # wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type)
     
-    wandb.log(metrics_config_dict)
-    wandb.log(config_dict)
+    # wandb.log(metrics_config_dict)
+    # wandb.log(config_dict)
 
 
 if __name__ == "__main__":
