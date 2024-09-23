@@ -43,7 +43,6 @@ do
         --eval.num-fewshot $fewshot \
         --eval.batch-size ${batch_size} \
         --eval.device 'cuda:0' \
-        --eval.log-samples True \
-        --eval.limit 2
+        --eval.log-samples True 
     done
 done
