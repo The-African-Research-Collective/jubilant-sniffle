@@ -4,7 +4,7 @@ import logging
 import pandas as pd
 from args import load_config
 from lm_eval.loggers import WandbLogger
-from utils import build_model_input_string, generate_lang_task_list
+from utils import build_model_input_string, generate_lang_task_list, log_eval_samples
 
 
 logging.basicConfig(level = logging.INFO)
@@ -82,21 +82,19 @@ def main():
     config_dict['num_fewshot'] = config.eval.num_fewshot
 
 
-    if config.eval.limit is None:
+    # if config.eval.limit is None:
 
-        run_name = generate_wandb_run_name(config_dict['model_args'], config.eval.num_fewshot)
-        with wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type, name=run_name) as run:
-            run.log(metrics_config_dict)
-            run.log(config_dict)
+    run_name = generate_wandb_run_name(config_dict['model_args'], config.eval.num_fewshot)
+    with wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type, name=run_name) as run:
+        run.log(metrics_config_dict)
+        run.log(config_dict)
 
-            all_metrics = wandb.Table(dataframe=metrics_df)
-            run.log({"Results": all_metrics})
+        all_metrics = wandb.Table(dataframe=metrics_df)
+        run.log({"Results": all_metrics})
 
-        
+    
         # Use LM Eval wandb logger to log the samples
-        lm_eval_wandb = WandbLogger( project=config.task.wandb_project, job_type=config.task.wandb_job_type, name=run_name)
-        lm_eval_wandb.post_init(results)
-        lm_eval_wandb.log_samples(results['samples'])
+        log_eval_samples(run, results)
 
 
 if __name__ == "__main__":
