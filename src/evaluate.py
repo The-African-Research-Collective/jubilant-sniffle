@@ -1,10 +1,7 @@
-import os
-import json
 import wandb
 import lm_eval
 import logging
 import pandas as pd
-import numpy as np
 from args import load_config
 from utils import build_model_input_string, generate_lang_task_list
 
@@ -14,6 +11,15 @@ logger = logging.getLogger(__name__)
 
 
 METRICS = [ 'acc', 'f1', 'acc_stderr']
+
+def generate_wandb_run_name(model_args: str, num_few_shot: int):
+
+    model_args = model_args.replace('pretrained=', '')
+    org_model_name = model_args.split(',')[0]
+
+    model_name = org_model_name.split('/')[-1].replace('_', '-')
+
+    return f"{model_name}-{num_few_shot}shot"
 
 
 def main():
@@ -61,7 +67,7 @@ def main():
             metrics_list.append(lang_metrics)
     
     metrics_df = pd.DataFrame(metrics_list)
-    metrics_df = metrics_df.groupby('lang').agg({ metric :'mean' for metric in METRICS }).reset_index()
+    grouped_metrics_df = metrics_df.groupby('lang').agg({ metric :'mean' for metric in METRICS }).reset_index()
 
     metrics_config_dict = {}
 
@@ -74,10 +80,13 @@ def main():
     config_dict = {k: v for k, v in results['config'].items() if isinstance(v, (str, int))}
     config_dict['num_fewshot'] = config.eval.num_fewshot
 
-    wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type)
+
+    run_name = generate_wandb_run_name(config_dict['model_args'], config.eval.num_fewshot)
+    wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type, name=run_name)
     
     wandb.log(metrics_config_dict)
     wandb.log(config_dict)
+    wandb.Table(dataframe=metrics_df)
 
 
 if __name__ == "__main__":
