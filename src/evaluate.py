@@ -34,7 +34,6 @@ def main():
 
     input_model_string = build_model_input_string(config.model)
     task_list, lang_2_task = generate_lang_task_list(config.task)
-    print(f"task list: {task_list}\nlang_2_task: {lang_2_task}")
 
     print(f"Task list: {task_list}")
 
@@ -70,7 +69,7 @@ def main():
     
     metrics_df = pd.DataFrame(metrics_list)
 
-    results_dir = f"./results/{config.task.task_name}/{config.eval.num_fewshot}/" if config.eval.num_fewshot > 0 else f"./results/{config.task.task_name}/0"
+    results_dir = f"./results/{config.task.task_name}/{config.eval.num_fewshot}/"
     os.makedirs(results_dir, exist_ok=True)
     filename = f"{config.model.model_name.split('/')[-1]}.csv"
 
