@@ -81,12 +81,15 @@ def main():
     config_dict['num_fewshot'] = config.eval.num_fewshot
 
 
-    run_name = generate_wandb_run_name(config_dict['model_args'], config.eval.num_fewshot)
-    wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type, name=run_name)
-    
-    wandb.log(metrics_config_dict)
-    wandb.log(config_dict)
-    wandb.Table(dataframe=metrics_df)
+    if config.eval.limit is None:
+        
+        run_name = generate_wandb_run_name(config_dict['model_args'], config.eval.num_fewshot)
+        with wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type, name=run_name) as run:
+            run.log(metrics_config_dict)
+            run.log(config_dict)
+
+            all_metrics = wandb.Table(dataframe=metrics_df)
+            run.log({"Results": all_metrics})
 
 
 if __name__ == "__main__":
