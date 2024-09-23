@@ -1,7 +1,7 @@
 model_name: google/gemma-2-9b-it
 trust_remote_code: false
-parallelize: false
-add_bos_token: false
+parallelize: True
+add_bos_token: True
 model_type: hf
 languages_supported:
   - eng
