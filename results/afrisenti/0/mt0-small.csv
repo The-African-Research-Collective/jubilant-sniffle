@@ -1,0 +1,11 @@
+lang,task,acc,acc_stderr,f1,f1_stderr
+yor,afrisenti_yor_prompt_1,1.0,0.0,1.0,N/A
+yor,afrisenti_yor_prompt_2,1.0,0.0,1.0,N/A
+yor,afrisenti_yor_prompt_3,1.0,0.0,1.0,N/A
+yor,afrisenti_yor_prompt_4,1.0,0.0,1.0,N/A
+yor,afrisenti_yor_prompt_5,1.0,0.0,1.0,N/A
+pcm,afrisenti_pcm_prompt_1,1.0,0.0,1.0,N/A
+pcm,afrisenti_pcm_prompt_2,1.0,0.0,1.0,N/A
+pcm,afrisenti_pcm_prompt_3,1.0,0.0,1.0,N/A
+pcm,afrisenti_pcm_prompt_4,1.0,0.0,1.0,N/A
+pcm,afrisenti_pcm_prompt_5,1.0,0.0,1.0,N/A

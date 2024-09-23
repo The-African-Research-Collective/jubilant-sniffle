@@ -3,19 +3,17 @@ task_template: afrisenti_{{language}}_prompt_1,afrisenti_{{language}}_prompt_2,a
 wandb_project: afribench-afrisenti
 wandb_job_type: eval
 languages:
-    - yor
-    - pcm
-  # - amh
-  # - arq
-  # - ary
-  # - hau
-  # - ibo
-  # - kin
-  # - orm
-  # - pcm
-  # - por
-  # - swa
-  # - tir
-  # - tso
-  # - twi
-  # - yor
+  - amh
+  - arq
+  - ary
+  - hau
+  - ibo
+  - kin
+  - orm
+  - pcm
+  - por
+  - swa
+  - tir
+  - tso
+  - twi
+  - yor

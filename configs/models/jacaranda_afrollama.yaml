@@ -1,4 +1,4 @@
-model_name: lelapa/InkubaLM-0.4B
+model_name: Jacaranda/AfroLlama_V1
 trust_remote_code: true
 parallelize: false
 add_bos_token: false
