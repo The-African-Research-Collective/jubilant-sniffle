@@ -3,6 +3,7 @@ import lm_eval
 import logging
 import pandas as pd
 from args import load_config
+from lm_eval.loggers import WandbLogger
 from utils import build_model_input_string, generate_lang_task_list
 
 
@@ -90,6 +91,12 @@ def main():
 
             all_metrics = wandb.Table(dataframe=metrics_df)
             run.log({"Results": all_metrics})
+
+        
+        # Use LM Eval wandb logger to log the samples
+        lm_eval_wandb = WandbLogger( project=config.task.wandb_project, job_type=config.task.wandb_job_type, name=run_name)
+        lm_eval_wandb.post_init(results)
+        lm_eval_wandb.log_samples(results['samples'])
 
 
 if __name__ == "__main__":
