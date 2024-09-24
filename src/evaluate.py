@@ -4,7 +4,8 @@ import lm_eval
 import logging
 import pandas as pd
 from args import load_config
-from utils import build_model_input_string, generate_lang_task_list
+from lm_eval.loggers import WandbLogger
+from utils import build_model_input_string, generate_lang_task_list, log_eval_samples
 
 
 logging.basicConfig(level = logging.INFO)
@@ -80,7 +81,7 @@ def main():
 
     metrics_config_dict = {}
 
-    for _, rows in metrics_df.iterrows():
+    for _, rows in grouped_metrics_df.iterrows():
         lang = rows['lang']
         for metric in METRICS:
             metrics_config_dict[f"{lang}_{metric}"] = rows[metric]
@@ -96,7 +97,7 @@ def main():
 
 
     if config.eval.limit is None:
-        
+
         run_name = generate_wandb_run_name(config_dict['model_args'], config.eval.num_fewshot)
         with wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type, name=run_name) as run:
             run.log(metrics_config_dict)
@@ -104,6 +105,9 @@ def main():
 
             all_metrics = wandb.Table(dataframe=metrics_df)
             run.log({"Results": all_metrics})
+
+            # Use LM Eval wandb logger to log the samples
+            log_eval_samples(run, results)
 
 
 if __name__ == "__main__":

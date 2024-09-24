@@ -1,13 +1,9 @@
-export HF_HOME='~/scratch/.cache/huggingface'
-export HF_DATASETS_CACHE='~/scratch/.cache/huggingface'
-
 task_config=configs/tasks/afrisenti.yaml
 model_path=configs/models
 batch_size=8
 
 declare -a models
 export CUDA_VISIBLE_DEVICES=0,1
-
 
 models=(
     
@@ -31,9 +27,11 @@ models=(
     # "bigscience_mt0_base"
     # "bigscience_mt0_large" 
     # "bigscience_mt0_xl"
+    # "bigscience_mt0_xxl"
     # "google_flan_t5_base"
     # "google_flan_t5_large"
     # "google_flan_t5_small"
+    # "google_gemma-2_27b_it"
 )
 
 for model in "${models[@]}"
