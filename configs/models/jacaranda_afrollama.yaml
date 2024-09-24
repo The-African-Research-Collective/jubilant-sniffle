@@ -1,6 +1,6 @@
 model_name: Jacaranda/AfroLlama_V1
 trust_remote_code: true
-parallelize: false
+parallelize: true
 add_bos_token: false
 model_type: hf
 languages_supported:

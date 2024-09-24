@@ -1,6 +1,6 @@
 model_name: bigscience/mt0-xxl
 trust_remote_code: false
-parallelize: false
+parallelize: true
 add_bos_token: false
 model_type: hf
 languages_supported:

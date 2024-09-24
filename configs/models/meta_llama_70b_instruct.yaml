@@ -1,5 +1,5 @@
 model_name: meta-llama/Meta-Llama-3-70B-Instruct
 trust_remote_code: false
-parallelize: false
+parallelize: true
 add_bos_token: false
 model_type: hf
