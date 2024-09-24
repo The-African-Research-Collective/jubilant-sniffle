@@ -1,3 +1,4 @@
+import os
 import wandb
 import lm_eval
 import logging
@@ -41,7 +42,6 @@ def main():
         model=config.model.model_type,
         model_args=input_model_string,
         tasks=task_list,
-        device=config.eval.device,
         log_samples=config.eval.log_samples,
         num_fewshot=config.eval.num_fewshot if config.eval.num_fewshot > 0 else None,
         batch_size=config.eval.batch_size,
