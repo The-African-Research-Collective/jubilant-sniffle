@@ -1,0 +1,5 @@
+model_name: meta-llama/Llama-2-7b-chat-hf
+trust_remote_code: false
+parallelize: false
+add_bos_token: false
+model_type: hf

@@ -1,0 +1,10 @@
+task_name: nollysenti
+task_template: nollysenti_{{language}}_prompt_1,nollysenti_{{language}}_prompt_2,nollysenti_{{language}}_prompt_3,nollysenti_{{language}}_prompt_4,nollysenti_{{language}}_prompt_5
+wandb_project: afribench-nollysenti
+wandb_job_type: eval
+languages:
+  - eng
+  - hau
+  - ibo
+  - yor
+  - pcm
