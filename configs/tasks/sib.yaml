@@ -1,0 +1,26 @@
+task_name: sib
+task_template: sib_{{language}}_prompt_1,sib_{{language}}_prompt_2,sib_{{language}}_prompt_3,sib_{{language}}_prompt_4,sib_{{language}}_prompt_5
+wandb_project: afribench-sib
+wandb_job_type: eval
+languages:
+  - afr
+  - amh
+  - ary
+  - arz
+  - bam
+  - eng
+  - ewe
+  - fon
+  - fra
+  - hau
+  - ibo
+  - kin
+  - lin
+  - sna
+  - som
+  - swa
+  - tir
+  - tso
+  - xho
+  - yor
+  - zul

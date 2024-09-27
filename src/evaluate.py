@@ -11,7 +11,8 @@ logging.basicConfig(level = logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-METRICS = [ 'acc', 'f1', 'acc_stderr']
+# METRICS = [ 'acc', 'f1', 'acc_stderr']
+METRICS = [ 'exact_match', 'f1']
 
 def generate_wandb_run_name(model_args: str, num_few_shot: int):
 
@@ -53,6 +54,8 @@ def main():
         write_out=config.eval.write_out,
         limit=config.eval.limit
     )
+
+    print(results)
 
     metric_results = results['results']
 

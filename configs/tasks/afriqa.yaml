@@ -1,0 +1,10 @@
+task_name: afriqa
+task_template: afriqa_{{language}}_prompt_1
+wandb_job_type: eval
+languages:
+  - bem
+  - fon
+  - hau
+  - ibo
+  - kin
+  - zul

@@ -1,13 +1,36 @@
+#!/bin/bash
+    
+# To be submitted to the SLURM queue with the command:
+# sbatch batch-submit.sh
+
+# Set resource requirements: Queues are limited to seven day allocations
+# Time format: HH:MM:SS
+#SBATCH --time=01:00:00
+#SBATCH --mem=10GB
+#SBATCH --cpus-per-task=2
+#SBATCH --gres=gpu:1
+
+# Set output file destinations (optional)
+# By default, output will appear in a file in the submission directory:
+# slurm-$job_number.out
+# This can be changed:
+#SBATCH -o JOB%j.out # File to which STDOUT will be written
+#SBATCH -e JOB%j-err.out # File to which STDERR will be written
+
+# email notifications: Get email when your job starts, stops, fails, completes...
+# Set email address
+#SBATCH --mail-user=ogundepoodunayo@gmail.com
+# Set types of notifications (from the options: BEGIN, END, FAIL, REQUEUE, ALL):
+#SBATCH --mail-type=ALL
+
+source llm_evaluation/bin/activate
+
+
 task_config=configs/tasks/afrisenti.yaml
 model_path=configs/models
 batch_size=8
 
 declare -a models
-export CUDA_VISIBLE_DEVICES=7
-
-models=(
-    
-)
 
 models=(
     # "afriteva_v2_large_ayaft"
@@ -19,8 +42,8 @@ models=(
     # "bigscience_bloomz_3b"
     # "bigscience_bloomz_7b1"
     # "lelapa_inkuba_0_4b"
-    "bigscience_mt0_base"
-    "bigscience_mt0_large"
+    # "bigscience_mt0_base"
+    # "bigscience_mt0_large"
     "bigscience_mt0_small"
     # "bigscience_mt0_xl"
     # "bigscience_mt0_xxl"
