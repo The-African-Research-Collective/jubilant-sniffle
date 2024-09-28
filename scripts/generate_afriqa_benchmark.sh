@@ -32,15 +32,15 @@ model_path=configs/models
 batch_size=8
 
 declare -a models
-export CUDA_VISIBLE_DEVICES=0,1
+export CUDA_VISIBLE_DEVICES=6,7
 export TRUST_REMOTE_CODE=True
 
 models=(
     # "afriteva_v2_large_ayaft"
     "meta_llama_8b_instruct"
-    # "meta_llama_70b_instruct"
-    # "google_flan_t5_small"
-    # "meta_llama-2_7b_chat"
+    "meta_llama_70b_instruct"
+    "google_flan_t5_small"
+    "meta_llama-2_7b_chat"
     # "aya_101"
     # "bigscience_bloomz_1b7"
     # "bigscience_bloomz_3b"
@@ -58,15 +58,15 @@ models=(
     # "jacaranda_afrollama"
 )
 
-for num_fewshot_samples in 0
+for num_fewshot_samples in 0 5
 do 
     for model in "${models[@]}"
     do
         echo "Running model: $model"
 
         python src/evaluate.py --model-config-yaml ${model_path}/${model}.yaml \
-        --task-config-yaml ${task_config} \
-        --eval.num-fewshot ${num_fewshot_samples} \
-        --eval.batch-size ${batch_size} 
+            --task-config-yaml ${task_config} \
+            --eval.num-fewshot ${num_fewshot_samples} \
+            --eval.batch-size ${batch_size} 
     done
 done

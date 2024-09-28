@@ -55,8 +55,6 @@ def main():
         limit=config.eval.limit
     )
 
-    print(results)
-
     metric_results = results['results']
 
     metrics_list = []
@@ -66,12 +64,12 @@ def main():
             lang_metrics = {'lang': lang, 'task': task}
             for metric, value in metric_results[task].items():
                 if metric != 'alias':
-                    lang_metrics[metric.replace(',none', '')] = value
+                    lang_metrics[metric.replace(',none', '').replace(',remove_whitespace','')] = value
             
             metrics_list.append(lang_metrics)
     
     metrics_df = pd.DataFrame(metrics_list)
-    grouped_metrics_df = metrics_df.groupby('lang').agg({ metric :'mean' for metric in METRICS }).reset_index()
+    grouped_metrics_df = metrics_df.groupby('lang').agg({metric: 'mean' for metric in METRICS if metric in metrics_df.columns}).reset_index()
 
     metrics_config_dict = {}
 
@@ -85,18 +83,18 @@ def main():
     config_dict['num_fewshot'] = config.eval.num_fewshot
 
 
-    if config.eval.limit is None:
+    # if config.eval.limit is None:
 
-        run_name = generate_wandb_run_name(config_dict['model_args'], config.eval.num_fewshot)
-        with wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type, name=run_name) as run:
-            run.log(metrics_config_dict)
-            run.log(config_dict)
+    run_name = generate_wandb_run_name(config_dict['model_args'], config.eval.num_fewshot)
+    with wandb.init( project=config.task.wandb_project, job_type=config.task.wandb_job_type, name=run_name) as run:
+        run.log(metrics_config_dict)
+        run.log(config_dict)
 
-            all_metrics = wandb.Table(dataframe=metrics_df)
-            run.log({"Results": all_metrics})
+        all_metrics = wandb.Table(dataframe=metrics_df)
+        run.log({"Results": all_metrics})
 
-            # Use LM Eval wandb logger to log the samples
-            log_eval_samples(run, results)
+        # Use LM Eval wandb logger to log the samples
+        log_eval_samples(run, results)
 
 
 if __name__ == "__main__":

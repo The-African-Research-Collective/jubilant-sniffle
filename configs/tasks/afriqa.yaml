@@ -1,10 +1,14 @@
 task_name: afriqa
-task_template: afriqa_{{language}}_prompt_1
+task_template: afriqa_{{language}}_prompt_1,afriqa_{{language}}_prompt_2,afriqa_{{language}}_prompt_3,afriqa_{{language}}_prompt_4,afriqa_{{language}}_prompt_5
+wandb_project: afribench-afriqa
 wandb_job_type: eval
 languages:
   - bem
+  - hau
   - fon
   - hau
   - ibo
   - kin
   - zul
+  - yor
+  - twi
