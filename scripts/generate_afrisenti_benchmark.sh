@@ -15,8 +15,8 @@
 # By default, output will appear in a file in the submission directory:
 # slurm-$job_number.out
 # This can be changed:
-#SBATCH -o JOB%j.out # File to which STDOUT will be written
-#SBATCH -e JOB%j-err.out # File to which STDERR will be written
+#SBATCH -o slurm_logs/JOB%j.out # File to which STDOUT will be written
+#SBATCH -e slurm_logs/JOB%j-err.out # File to which STDERR will be written
 
 # email notifications: Get email when your job starts, stops, fails, completes...
 # Set email address

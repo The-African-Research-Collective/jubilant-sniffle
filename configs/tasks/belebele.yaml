@@ -1,0 +1,25 @@
+task_name: belebele
+task_template: belebele_{{language}}_prompt_1,belebele_{{language}}_prompt_2,belebele_{{language}}_prompt_3,belebele_{{language}}_prompt_4,belebele_{{language}}_prompt_5
+wandb_project: afribench-belebele
+wandb_job_type: eval
+languages:
+  - afr
+  - amh
+  - ary
+  - arz
+  - bam
+  - eng
+  - fra
+  - hau
+  - ibo
+  - lin
+  - por
+  - sna
+  - swa
+  - tir
+  - tso
+  - tsn
+  - wol
+  - xho
+  - yor
+  - zul
