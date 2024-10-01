@@ -11,8 +11,7 @@ logging.basicConfig(level = logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-# METRICS = [ 'acc', 'f1', 'acc_stderr']
-METRICS = [ 'exact_match', 'f1']
+METRICS = [ 'exact_match', 'f1', 'acc', 'f1', 'acc_stderr']
 
 def generate_wandb_run_name(model_args: str, num_few_shot: int):
 
@@ -76,7 +75,8 @@ def main():
     for _, rows in grouped_metrics_df.iterrows():
         lang = rows['lang']
         for metric in METRICS:
-            metrics_config_dict[f"{lang}_{metric}"] = rows[metric]
+            if metric in rows:
+                metrics_config_dict[f"{lang}_{metric}"] = rows[metric]
 
     # # Log the results to wandb as metrics
     config_dict = {k: v for k, v in results['config'].items() if isinstance(v, (str, int))}

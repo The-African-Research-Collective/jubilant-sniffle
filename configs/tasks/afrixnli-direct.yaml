@@ -1,6 +1,6 @@
-task_name: afrixnli_en_direct
-task_template: afrixnli_en_direct_{{language}}
-wandb_project: llm-evaluation-afrixnli-en-direct
+task_name: afrixnli_direct
+task_template: afrixnli_{{language}}_prompt_1,afrixnli_{{language}}_prompt_2,afrixnli_{{language}}_prompt_3,afrixnli_{{language}}_prompt_4,afrixnli_{{language}}_prompt_5
+wandb_project: afribench-afrixnli-direct
 wandb_job_type: eval
 languages:
   - amh

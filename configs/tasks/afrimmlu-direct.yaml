@@ -1,6 +1,6 @@
 task_name: afrimmlu_direct
-task_template: afrimmlu_direct_{{language}}
-wandb_project: llm-evaluation-afrimmlu-direct
+task_template: afrimmlu_{{language}}_prompt_1,afrimmlu_{{language}}_prompt_2,afrimmlu_{{language}}_prompt_3,afrimmlu_{{language}}_prompt_4,afrimmlu_{{language}}_prompt_5
+wandb_project: afribench-afrimmlu-direct
 wandb_job_type: eval
 languages:
   - amh

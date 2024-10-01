@@ -5,10 +5,11 @@
 
 # Set resource requirements: Queues are limited to seven day allocations
 # Time format: HH:MM:SS
-#SBATCH --time=01:00:00
+#SBATCH --nodelist=watgpu408
+#SBATCH --time=24:00:00
 #SBATCH --mem=10GB
-#SBATCH --cpus-per-task=2
-#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=1
+#SBATCH --gres=gpu:2
 
 # Set output file destinations (optional)
 # By default, output will appear in a file in the submission directory:
@@ -37,14 +38,14 @@ models=(
     # "meta_llama_8b_instruct"
     # "meta_llama_70b_instruct"
     # "meta_llama-2_7b_chat"
-    # "aya_101"
+    "aya_101"
     # "bigscience_bloomz_1b7"
     # "bigscience_bloomz_3b"
     # "bigscience_bloomz_7b1"
     # "lelapa_inkuba_0_4b"
     # "bigscience_mt0_base"
     # "bigscience_mt0_large"
-    "bigscience_mt0_small"
+    # "bigscience_mt0_small"
     # "bigscience_mt0_xl"
     # "bigscience_mt0_xxl"
     # "google_flan_t5_base"
