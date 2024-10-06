@@ -1,0 +1,7 @@
+model_name: UBC-NLP/cheetah-base
+trust_remote_code: true
+parallelize: false
+add_bos_token: false
+model_type: hf
+languages_supported:
+  - eng

@@ -1,0 +1,21 @@
+task_name: masakhanews
+task_template: masakhanews_{{language}}_prompt_1,masakhanews_{{language}}_prompt_2,masakhanews_{{language}}_prompt_3,masakhanews_{{language}}_prompt_4,masakhanews_{{language}}_prompt_5
+wandb_project: afribench-masakhanews
+wandb_job_type: eval
+languages:
+  - amh
+  - eng
+  - fra
+  - hau
+  - ibo
+  - lin
+  - lug
+  - orm
+  - pcm
+  - run
+  - sna
+  - som
+  - swa
+  - tir
+  - xho
+  - yor

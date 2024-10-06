@@ -1,0 +1,26 @@
+task_name: mafand
+task_template: mafand_{{language}}_prompt_1,mafand_{{language}}_prompt_2,mafand_{{language}}_prompt_3,mafand_{{language}}_prompt_4,mafand_{{language}}_prompt_5
+wandb_project: afribench-mafand
+wandb_job_type: eval
+languages:
+  - amh
+  - bam
+  - bbj
+  - ewe
+  - fon
+  - hau
+  - ibo
+  - kin
+  - lug
+  - luo
+  - mos
+  - nya
+  - pcm
+  - sna
+  - swa
+  - tsn
+  - twi
+  - wol
+  - xho
+  - yor
+  - zul
