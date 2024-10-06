@@ -34,29 +34,26 @@ batch_size=8
 declare -a models
 export CUDA_VISIBLE_DEVICES=0,1
 export TRUST_REMOTE_CODE=True
+HF_HOME=/jarmy/odunayoogundepo/jubilant-sniffle/cache
+TRANSFORMERS_CACHE=${HF_HOME}
+WANDB_DIR=${HF_HOME}
 
 models=(
     # "afriteva_v2_large_ayaft"
     # "meta_llama_8b_instruct"
     # "meta_llama_70b_instruct"
-    # "google_flan_t5_small"
+    # "meta_llama_3_1_8b_instruct.yaml"
     # "meta_llama-2_7b_chat"
     # "aya_101"
-    "bigscience_bloomz_1b7"
-    "bigscience_bloomz_3b"
-    "bigscience_bloomz_7b1"
-    "lelapa_inkuba_0_4b"
-    "bigscience_mt0_base"
-    "bigscience_mt0_large"
-    "bigscience_mt0_small"
-    "bigscience_mt0_xl"
+    # "lelapa_inkuba_0_4b"
+    # "bigscience_mt0_xl"
     "bigscience_mt0_xxl"
-    "google_flan_t5_base"
-    "google_flan_t5_large"
     # "google_gemma-1_7b_it"
     # "google_gemma-2_27b_it"
     # "jacaranda_afrollama"
+    # "llamax_8b"
 )
+
 
 for num_fewshot_samples in 0 5
 do 
