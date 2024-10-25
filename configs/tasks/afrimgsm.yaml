@@ -1,0 +1,23 @@
+task_name: afrimgsm
+task_template: afrimgsm_cot_{{language}}_prompt_1,afrimgsm_cot_{{language}}_prompt_2,afrimgsm_cot_{{language}}_prompt_3,afrimgsm_cot_{{language}}_prompt_4,afrimgsm_cot_{{language}}_prompt_5
+wandb_project: afribench-afrimgsm
+wandb_job_type: eval
+languages:
+  - amh
+  - eng
+  - ewe
+  - fra
+  - hau
+  - ibo
+  - kin
+  - lin
+  - lug
+  - orm
+  - sna
+  - sot
+  - swa
+  - twi
+  - wol
+  - xho
+  - yor
+  - zul

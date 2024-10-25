@@ -1,4 +1,4 @@
-model_name: meta-llama/Llama-2-7b-chat-hf
+model_name: LLaMAX/LLaMAX3-8B-Alpaca
 trust_remote_code: false
 parallelize: true
 add_bos_token: false
