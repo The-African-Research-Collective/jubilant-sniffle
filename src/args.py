@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
 import argparse
 import yaml
-from typing import List, Optional, Type, TypeVar
+from typing import List, Optional, Type, TypeVar, Union
 
 T = TypeVar('T', bound='BaseConfig')
 
@@ -18,11 +18,22 @@ class BaseConfig:
     @classmethod
     def add_args(cls, parser: argparse.ArgumentParser, prefix: str = '') -> None:
         for field_name, field_type in cls.__annotations__.items():
-            parser.add_argument(
-                f"--{prefix}{field_name.replace('_', '-')}", 
-                type=field_type,
-                help=f"{field_name}"
-            )
+            # Handle Union types
+            if hasattr(field_type, '__origin__') and field_type.__origin__ is Union:
+                types = field_type.__args__
+                # Add specific logic for Union[int, str]
+                if str in types and int in types:
+                    parser.add_argument(
+                        f"--{prefix}{field_name.replace('_', '-')}",
+                        type=str,  # argparse will treat input as string, you can parse to int later
+                        help=f"{field_name} (str or int)"
+                    )
+            else:
+                parser.add_argument(
+                    f"--{prefix}{field_name.replace('_', '-')}",
+                    type=field_type,
+                    help=f"{field_name}"
+                )
 
 @dataclass_json
 @dataclass
@@ -63,6 +74,10 @@ class ModelConfig(BaseConfig):
     trust_remote_code: bool = field(default=False)
     parallelize: bool = field(default=False)
     add_bos_token: bool = field(default=False)
+    tensor_parallel_size: int = field(default=1)
+    dtype: str = field(default='auto')
+    gpu_memory_utilization: float = field(default=0.5)
+    data_parallel_size: int = field(default=1)
 
 @dataclass_json
 @dataclass
@@ -71,7 +86,7 @@ class EvaluationConfig(BaseConfig):
     Configuration class for evaluation settings.
 
     Attributes:
-        batch_size (int): The batch size for evaluation. Default is 8.
+        batch_size (str | int): The batch size for evaluation. Default is auto.
         max_batch_size (int): The maximum batch size for evaluation. Default is 8.
         num_fewshot (int): The number of few-shot examples for evaluation. Default is 0.
         random_seed (int): The random seed for evaluation. Default is 42.
@@ -83,7 +98,7 @@ class EvaluationConfig(BaseConfig):
         write_out (bool): Whether to write out evaluation results. Default is False.
         limit (int): The limit for evaluation. Default is -1.
     """
-    batch_size: int = field(default=8)
+    batch_size: Union[int, str] = field(default='auto')
     max_batch_size: int = field(default=8)
     num_fewshot: int = field(default=0)
     random_seed: int = field(default=42)

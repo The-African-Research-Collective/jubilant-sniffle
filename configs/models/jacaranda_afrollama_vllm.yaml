@@ -1,0 +1,8 @@
+model_name: Jacaranda/AfroLlama_V1
+trust_remote_code: true
+dtype: auto
+tensor_parallel_size: 2
+gpu_memory_utilization: 0.8
+data_parallel_size: 1
+add_bos_token: false
+model_type: vllm

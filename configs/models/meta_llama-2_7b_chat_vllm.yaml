@@ -1,0 +1,7 @@
+model_name: meta-llama/Llama-2-7b-chat-hf
+dtype: auto
+tensor_parallel_size: 2
+gpu_memory_utilization: 0.8
+data_parallel_size: 1
+add_bos_token: true
+model_type: vllm

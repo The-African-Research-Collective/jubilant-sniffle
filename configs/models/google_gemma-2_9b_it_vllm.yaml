@@ -1,0 +1,8 @@
+model_name: google/gemma-2-9b-it
+trust_remote_code: false
+dtype: auto
+tensor_parallel_size: 2
+gpu_memory_utilization: 0.8
+data_parallel_size: 1
+add_bos_token: true
+model_type: vllm

@@ -49,6 +49,18 @@ def build_model_input_string(model_args: ModelConfig):
     
     if model_args.add_bos_token:
         output_string += "add_bos_token=True,"
+
+    if model_args.dtype:
+        output_string += f"dtype={model_args.dtype},"
+
+    if model_args.tensor_parallel_size:
+        output_string += f"tensor_parallel_size={model_args.tensor_parallel_size},"
+
+    if model_args.gpu_memory_utilization:
+        output_string += f"gpu_memory_utilization={model_args.gpu_memory_utilization},"
+
+    if model_args.data_parallel_size:
+        output_string += f"data_parallel_size={model_args.data_parallel_size},"
     
     if output_string.endswith(","):
         output_string =  output_string[:-1]

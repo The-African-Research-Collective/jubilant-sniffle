@@ -11,7 +11,7 @@ logging.basicConfig(level = logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-METRICS = [ 'acc', 'f1', 'acc_stderr']
+METRICS = [ 'acc', 'f1', 'exact_match,flexible-extract', 'acc_stderr', 'exact_match_stderr,flexible-extract']
 
 def generate_wandb_run_name(model_args: str, num_few_shot: int):
 
@@ -68,14 +68,16 @@ def main():
             metrics_list.append(lang_metrics)
     
     metrics_df = pd.DataFrame(metrics_list)
-    grouped_metrics_df = metrics_df.groupby('lang').agg({ metric :'mean' for metric in METRICS }).reset_index()
+    grouped_metrics_df = metrics_df.groupby('lang').agg({ metric :'mean' for metric in METRICS if metric in metrics_df.columns}).reset_index()
 
     metrics_config_dict = {}
 
     for _, rows in grouped_metrics_df.iterrows():
         lang = rows['lang']
         for metric in METRICS:
-            metrics_config_dict[f"{lang}_{metric}"] = rows[metric]
+            if metric in grouped_metrics_df.columns:
+                formatted_metric = metric.split(',')[0]
+                metrics_config_dict[f"{lang}_{formatted_metric}"] = rows[metric]
 
     # # Log the results to wandb as metrics
     config_dict = {k: v for k, v in results['config'].items() if isinstance(v, (str, int))}
