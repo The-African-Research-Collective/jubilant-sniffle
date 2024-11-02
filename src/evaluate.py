@@ -136,11 +136,7 @@ def main():
         for metric in METRICS:
             if metric in rows:
                 metrics_config_dict[f"{lang}_{metric}"] = rows[metric]
-<<<<<<< HEAD
-
-=======
     
->>>>>>> 7aefd68 (split evaluations by task)
     # # Log the results to wandb as metrics
     config_dict = {k: v for k, v in results['config'].items() if isinstance(v, (str, int))}
     config_dict['num_fewshot'] = config.eval.num_fewshot
