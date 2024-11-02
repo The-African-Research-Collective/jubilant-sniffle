@@ -1,6 +1,4 @@
 import os
-import json
-import wandb
 import logging
 import pandas as pd
 
@@ -8,7 +6,6 @@ from args import ModelConfig, TaskConfig
 from typing import List, Dict, Any
 from collections import defaultdict
 from lm_eval.loggers import WandbLogger
-from lm_eval.loggers.utils import _handle_non_serializable
 
 
 logger = logging.getLogger(__name__)
@@ -91,32 +88,17 @@ def _get_config(results) -> Dict[str, Any]:
     return configs
 
 
-def _log_samples_as_artifact(
-        data: List[Dict[str, Any]], task_name: str, run
-    ) -> None:
-        # log the samples as an artifact
-        dumped = json.dumps(
-            data,
-            indent=2,
-            default=_handle_non_serializable,
-            ensure_ascii=False,
-        )
-        artifact = wandb.Artifact(f"{task_name}", type="samples_by_task")
-        with artifact.new_file(
-            f"{task_name}_eval_samples.json", mode="w", encoding="utf-8"
-        ) as f:
-            f.write(dumped)
-        run.log_artifact(artifact)
-
-
-def log_eval_samples(run, results) -> None:
+def log_eval_samples(run, results, task_names: list[str] = None) -> None:
         """Log evaluation samples to W&B.
 
         Args:
             samples (Dict[str, List[Dict[str, Any]]]): Evaluation samples for each task.
         """
         samples = results["samples"]
-        task_names: List[str] = list(results.get("results", {}).keys())
+
+        if task_names is None:
+            task_names: List[str] = list(results.get("results", {}).keys())
+        
         group_names: List[str] = list(results.get("groups", {}).keys())
         configs = _get_config(results)
 
@@ -129,6 +111,7 @@ def log_eval_samples(run, results) -> None:
 
         for task_name in task_names:
             group_names = configs['task_configs'][task_name].get("group", None)
+            
             if group_names:
                 if isinstance(group_names, str):
                     group_names = [group_names]
@@ -148,11 +131,9 @@ def log_eval_samples(run, results) -> None:
             df = WandbLogger()._generate_dataset(eval_preds, configs['task_configs'].get(task_name))
             run.log({f"{task_name}_eval_results": df})
 
-            # log the samples as a json file as W&B Artifact
-            _log_samples_as_artifact(eval_preds, task_name, run)
-
         for group, grouped_tasks in tasks_by_groups.items():
             grouped_df = pd.DataFrame()
+            
             for task_name in grouped_tasks:
                 eval_preds = samples[task_name]
                 df = WandbLogger()._generate_dataset(
@@ -161,8 +142,5 @@ def log_eval_samples(run, results) -> None:
                 df["group"] = group
                 df["task"] = task_name
                 grouped_df = pd.concat([grouped_df, df], ignore_index=True)
-
-                # log the samples as a json file as W&B Artifact
-                _log_samples_as_artifact(eval_preds, task_name, run)
 
             run.log({f"{group}_eval_results": grouped_df})
