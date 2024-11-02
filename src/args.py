@@ -1,3 +1,5 @@
+import os
+
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
 import argparse
@@ -83,7 +85,8 @@ class EvaluationConfig(BaseConfig):
         write_out (bool): Whether to write out evaluation results. Default is False.
         limit (int): The limit for evaluation. Default is -1.
     """
-    batch_size: int = field(default=8)
+    split_tasks: bool = field(default=False)
+    batch_size: str = field(default="auto")
     max_batch_size: int = field(default=8)
     num_fewshot: int = field(default=0)
     random_seed: int = field(default=42)
@@ -94,6 +97,10 @@ class EvaluationConfig(BaseConfig):
     log_samples: bool = field(default=True)
     write_out: bool = field(default=False)
     limit: int = field(default=None)
+
+    def __post_init__(self):
+        if self.batch_size.isdecimal():
+            self.batch_size = int(self.batch_size)
 
 
 @dataclass_json
@@ -118,6 +125,7 @@ class ScriptConfig(BaseConfig):
     eval: EvaluationConfig = field(default_factory=EvaluationConfig)
     model_config_yaml: Optional[str] = field(default=None)
     task_config_yaml: Optional[str] = field(default=None)
+    run_dir: str = field(default=None)
 
     @classmethod
     def add_args(cls, parser: argparse.ArgumentParser) -> None:
@@ -162,6 +170,11 @@ class ScriptConfig(BaseConfig):
                 for part in parts[:-1]:
                     obj = getattr(obj, part)
                 setattr(obj, parts[-1], value)
+        
+        if config.run_dir is None and config.eval.split_tasks:
+            raise ValueError
+        else:
+            os.makedirs(config.run_dir, exist_ok=True)
         
         return config
 
