@@ -172,3 +172,4 @@ wandb/*
 llm_evaluation/
 
 .DS_Store
+*/.DS_Store
