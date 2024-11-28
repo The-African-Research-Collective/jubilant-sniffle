@@ -1,0 +1,29 @@
+task_name: mafand
+task_template: mafand_{{language}}_prompt_1,mafand_{{language}}_prompt_2,mafand_{{language}}_prompt_3,mafand_{{language}}_prompt_4,mafand_{{language}}_prompt_5
+wandb_project: afribench-mafand
+wandb_job_type: eval
+prompt_directory: runs/mafand/prompts
+hub_dataset: masakhane/mafand
+evaluation_split: validation
+languages:
+  - en_amh
+  - fr_bam
+  - fr_bbj
+  - fr_ewe
+  - fr_fon
+  - en_hau
+  - en_ibo
+  - en_kin
+  - en_lug
+  - en_luo
+  - fr_mos
+  - en_nya
+  - en_pcm
+  - en_sna
+  - en_swa
+  - en_tsn
+  - en_twi
+  - fr_wol
+  - en_xho
+  - en_yor
+  - en_zul
