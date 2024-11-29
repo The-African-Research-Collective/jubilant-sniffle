@@ -31,6 +31,8 @@ class MessageQueue:
             CREATE TABLE IF NOT EXISTS messages (
                 hash TEXT PRIMARY KEY,
                 content TEXT NOT NULL,
+                translation_direction TEXT,
+                prompt_type TEXT NOT NULL,
                 priority INTEGER DEFAULT 0,
                 created_at TEXT NOT NULL,
                 processed_at TEXT,
@@ -44,7 +46,7 @@ class MessageQueue:
     def _hash_message(self, message: str) -> str:
         return hashlib.sha256(message.encode()).hexdigest()
 
-    async def enqueue(self, messages: List[str], priority: int = 0) -> List[str]:
+    async def enqueue(self, messages: List[str], translation_direction: str, prompt_type:str,  priority: int = 0) -> List[str]:
         hashes = []
         async with aiosqlite.connect(self.db_path) as db:
             for message in messages:
@@ -56,13 +58,13 @@ class MessageQueue:
                 if not await cursor.fetchone():
                     queue_message = QueueMessage(content=message, priority=priority)
                     await db.execute(
-                        "INSERT INTO messages (hash, content, priority, created_at) VALUES (?, ?, ?, ?)",
-                        (msg_hash, message, priority, queue_message.created_at)
+                        "INSERT INTO messages (hash, content, translation_direction, prompt_type, priority, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+                        (msg_hash, message,translation_direction, prompt_type, priority, queue_message.created_at)
                     )
             await db.commit()
         return hashes
 
-    async def _fetch_pending_messages(self, limit: int = 32) -> AsyncGenerator[List[tuple], None]:
+    async def _fetch_pending_messages(self, limit: int) -> AsyncGenerator[List[tuple], None]:
         async with aiosqlite.connect(self.db_path) as db:
             offset = 0
             while True:
@@ -83,7 +85,7 @@ class MessageQueue:
     async def process_queue(self, model_name:str) -> Dict[str, Any]:
         total_processed = total_errors = 0
         
-        async for pending_batch in self._fetch_pending_messages(32):
+        async for pending_batch in self._fetch_pending_messages(1000):
             hashes, messages = zip(*pending_batch)
             
             for i in range(0, len(messages), self.batch_size):
@@ -119,7 +121,7 @@ class MessageQueue:
     async def get_result(self, msg_hash: str) -> Optional[Dict[str, Any]]:
         async with aiosqlite.connect(self.db_path) as db:
             cursor = await db.execute(
-                "SELECT content, status, result, error, created_at, processed_at FROM messages WHERE hash = ?",
+                "SELECT content, status, result, error, created_at, processed_at, translation_direction FROM messages WHERE hash = ?",
                 (msg_hash,)
             )
             row = await cursor.fetchone()
@@ -133,5 +135,30 @@ class MessageQueue:
                 "result": row[2],
                 "error": row[3],
                 "created_at": row[4],
-                "processed_at": row[5]
+                "processed_at": row[5],
+                "translation_direction": row[6]
             }
+    
+    async def get_batch_results(self, msg_hashes: List[str]) -> Dict[str, Dict[str, Any]]:
+        results = {}
+        async with aiosqlite.connect(self.db_path) as db:
+            for msg_hash in msg_hashes:
+                cursor = await db.execute(
+                    "SELECT content, status, result, error, created_at, processed_at, translation_direction FROM messages WHERE hash = ?",
+                    (msg_hash,)
+                )
+                row = await cursor.fetchone()
+                
+                if not row:
+                    results[msg_hash] = None
+                else:
+                    results[msg_hash] = {
+                        "content": row[0],
+                        "status": row[1],
+                        "result": row[2],
+                        "error": row[3],
+                        "created_at": row[4],
+                        "processed_at": row[5],
+                        "translation_direction": row[6]
+                    }
+        return results
