@@ -4,7 +4,7 @@ wandb_project: afribench-mafand
 wandb_job_type: eval
 prompt_directory: runs/mafand/prompts
 hub_dataset: masakhane/mafand
-evaluation_split: validation
+evaluation_split: test
 languages:
   - en_amh
   - fr_bam

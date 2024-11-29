@@ -5,7 +5,6 @@ from typing import List, Any, Optional, Dict
 from together import AsyncTogether
 from enum import Enum
 from dotenv import load_dotenv
-from tqdm import tqdm
 
 load_dotenv()
 
@@ -90,7 +89,7 @@ class AsyncBatchClient:
     async def process_requests(self, batch_request: BatchRequest) -> List[str]:
         results = []
         
-        for i in tqdm(range(0, len(batch_request.messages), batch_request.max_batch_size) , desc="Processing requests ..."):
+        for i in range(0, len(batch_request.messages), batch_request.max_batch_size):
             batch = batch_request.messages[i:i + batch_request.max_batch_size]
             
             try:
