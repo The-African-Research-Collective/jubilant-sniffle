@@ -55,7 +55,7 @@ models=(
 )
 
 
-for num_fewshot_samples in 5
+for num_fewshot_samples in 0
 do 
     for model in "${models[@]}"
     do

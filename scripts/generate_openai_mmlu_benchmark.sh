@@ -5,8 +5,8 @@
 
 # Set resource requirements: Queues are limited to seven day allocations
 # Time format: HH:MM:SS
-#SBATCH --nodelist=watgpu408
-#SBATCH --time=24:00:00
+#SBATCH --nodelist=watgpu208
+#SBATCH --time=48:00:00
 #SBATCH --mem=10GB
 #SBATCH --cpus-per-task=1
 #SBATCH --gres=gpu:4
@@ -24,17 +24,17 @@
 # Set types of notifications (from the options: BEGIN, END, FAIL, REQUEUE, ALL):
 #SBATCH --mail-type=ALL
 
-task_config=configs/tasks/afriqa.yaml
+source llm_evaluation/bin/activate
+
+
+task_config=configs/tasks/openai_mmlu.yaml
 model_path=configs/models
 batch_size=auto
-task="afriqa"
+task="openai_mmlu"
 
 declare -a models
 export CUDA_VISIBLE_DEVICES=0,1,2,3
 export TRUST_REMOTE_CODE=True
-# HF_HOME=/jarmy/odunayoogundepo/jubilant-sniffle/cache
-# TRANSFORMERS_CACHE=${HF_HOME}
-# WANDB_DIR=${HF_HOME}
 
 models=(
     # "afriteva_v2_large_ayaft"

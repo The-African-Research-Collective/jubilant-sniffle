@@ -5,11 +5,11 @@
 
 # Set resource requirements: Queues are limited to seven day allocations
 # Time format: HH:MM:SS
-#SBATCH --nodelist=watgpu408
-#SBATCH --time=24:00:00
+#SBATCH --time=20:00:00
 #SBATCH --mem=10GB
 #SBATCH --cpus-per-task=1
-#SBATCH --gres=gpu:4
+#SBATCH --gres=gpu:3
+#SBATCH --nodelist=watgpu308
 
 # Set output file destinations (optional)
 # By default, output will appear in a file in the submission directory:
@@ -24,13 +24,18 @@
 # Set types of notifications (from the options: BEGIN, END, FAIL, REQUEUE, ALL):
 #SBATCH --mail-type=ALL
 
-task_config=configs/tasks/afriqa.yaml
+# source llm_evaluation/bin/activate
+
+
+task_config=configs/tasks/sib_contd.yaml
 model_path=configs/models
 batch_size=auto
-task="afriqa"
+task="sib"
+
+mkdir -p task_logs/$task
 
 declare -a models
-export CUDA_VISIBLE_DEVICES=0,1,2,3
+export CUDA_VISIBLE_DEVICES=0,1,2
 export TRUST_REMOTE_CODE=True
 # HF_HOME=/jarmy/odunayoogundepo/jubilant-sniffle/cache
 # TRANSFORMERS_CACHE=${HF_HOME}
@@ -38,20 +43,20 @@ export TRUST_REMOTE_CODE=True
 
 models=(
     # "afriteva_v2_large_ayaft"
-    # "meta_llama_8b_instruct"
+    "meta_llama_8b_instruct"
     "meta_llama_70b_instruct"
-    "lugh_llama"
-    # "meta_llama_3_1_8b_instruct"
-    # "meta_llama-2_7b_chat"
-    # "aya_101"
+    "meta_llama_3_1_8b_instruct"
+    "meta_llama-2_7b_chat"
+    "aya_101"
     # "lelapa_inkuba_0_4b"
     # "bigscience_mt0_xl"
-    # "bigscience_mt0_xxl"
-    # "google_gemma-1_7b_it"
-    # "google_gemma-2_27b_it"
-    # "jacaranda_afrollama"
-    # "llamax_8b"
-    # "google_gemma-2_9b_it"
+    "bigscience_mt0_xxl"
+    "google_gemma-1_7b_it"
+    "google_gemma-2_27b_it"
+    "google_gemma_2-9b-it"
+    "jacaranda_afrollama"
+    "llamax_8b"
+    "meta_llama_3_2_1b_instruct"
 )
 
 
