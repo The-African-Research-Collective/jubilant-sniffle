@@ -44,6 +44,9 @@ class TaskConfig(BaseConfig):
     task_template: str = field(default="")
     wandb_project: str = field(default="default_project")
     wandb_job_type: str = field(default="eval")
+    prompt_directory: str = field(default=None)
+    hub_dataset: str = field(default=None)
+    evaluation_split: str = field(default=None)
 
 @dataclass_json
 @dataclass
