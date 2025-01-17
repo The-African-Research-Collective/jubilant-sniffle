@@ -1,0 +1,8 @@
+model_name: /home/oogundep/runs/llama3instruct_no_instruction_mask_20k
+revision: main
+trust_remote_code: true
+parallelize: false
+add_bos_token: false
+model_type: hf
+languages_supported:
+  - eng

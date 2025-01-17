@@ -25,13 +25,13 @@
 #SBATCH --mail-type=ALL
 
 
-task_config=configs/tasks/belebele.yaml
+task_config=configs/tasks/naijarc.yaml
 model_path=configs/models
 batch_size=4
-task="belebele"
+task="naijarc"
 
 declare -a models
-export CUDA_VISIBLE_DEVICES=0,1,2
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 export TRUST_REMOTE_CODE=True
 # HF_HOME=/jarmy/odunayoogundepo/jubilant-sniffle/cache
 # TRANSFORMERS_CACHE=${HF_HOME}
@@ -41,7 +41,7 @@ models=(
     # "afriteva_v2_large_ayaft"
     # "meta_llama_8b_instruct"
     "meta_llama_70b_instruct"
-    # "lugh_llama"
+    "lugh_llama"
     # "meta_llama_3_1_8b_instruct"
     # "meta_llama-2_7b_chat"
     # "aya_101"

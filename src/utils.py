@@ -47,6 +47,11 @@ def build_model_input_string(model_args: ModelConfig):
     if model_args.add_bos_token:
         output_string += "add_bos_token=True,"
     
+    if model_args.revision:
+        output_string += "revision=" + model_args.revision + ","
+    
+    output_string += "max_length=2048"
+
     if output_string.endswith(","):
         output_string =  output_string[:-1]
     

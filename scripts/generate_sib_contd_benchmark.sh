@@ -35,7 +35,7 @@ task="sib"
 mkdir -p task_logs/$task
 
 declare -a models
-export CUDA_VISIBLE_DEVICES=0,1,2
+export CUDA_VISIBLE_DEVICES=5,6,7
 export TRUST_REMOTE_CODE=True
 # HF_HOME=/jarmy/odunayoogundepo/jubilant-sniffle/cache
 # TRANSFORMERS_CACHE=${HF_HOME}
@@ -43,20 +43,20 @@ export TRUST_REMOTE_CODE=True
 
 models=(
     # "afriteva_v2_large_ayaft"
-    "meta_llama_8b_instruct"
+    # "meta_llama_8b_instruct"
     "meta_llama_70b_instruct"
-    "meta_llama_3_1_8b_instruct"
-    "meta_llama-2_7b_chat"
-    "aya_101"
+    # "meta_llama_3_1_8b_instruct"
+    # "meta_llama-2_7b_chat"
+    # "aya_101"
     # "lelapa_inkuba_0_4b"
     # "bigscience_mt0_xl"
-    "bigscience_mt0_xxl"
-    "google_gemma-1_7b_it"
-    "google_gemma-2_27b_it"
-    "google_gemma_2-9b-it"
-    "jacaranda_afrollama"
-    "llamax_8b"
-    "meta_llama_3_2_1b_instruct"
+    # "bigscience_mt0_xxl"
+    # "google_gemma-1_7b_it"
+    # "google_gemma-2_27b_it"
+    # "google_gemma-2_9b_it"
+    # "jacaranda_afrollama"
+    # "llamax_8b"
+    # "meta_llama_3_2_1b_instruct"
 )
 
 

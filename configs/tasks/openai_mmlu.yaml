@@ -1,0 +1,8 @@
+task_name: openai_mmlu
+task_template: openai_mmlu_{{language}}_prompt_1,openai_mmlu_{{language}}_prompt_2,openai_mmlu_{{language}}_prompt_3,openai_mmlu_{{language}}_prompt_4,openai_mmlu_{{language}}_prompt_5
+wandb_project: afribench-openaimmlu
+wandb_job_type: eval
+languages:
+  - ara
+  - swa
+  - yor

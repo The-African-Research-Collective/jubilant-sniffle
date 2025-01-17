@@ -1,0 +1,7 @@
+model_name: Lugha-Llama/Lugha-Llama-8B-wura_math
+trust_remote_code: true
+parallelize: true
+add_bos_token: false
+model_type: hf
+languages_supported:
+  - eng

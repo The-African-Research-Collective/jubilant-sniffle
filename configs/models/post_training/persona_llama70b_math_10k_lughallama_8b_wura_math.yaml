@@ -1,0 +1,8 @@
+model_name: taresco/persona_llama70b_math_10k_lughallama_8b_wura_math
+revision: persona_llama70b_math_10k_lughallama_8b_wura_math__42__1736650358__hub
+trust_remote_code: true
+parallelize: false
+add_bos_token: false
+model_type: hf
+languages_supported:
+  - eng

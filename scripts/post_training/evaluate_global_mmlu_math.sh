@@ -6,10 +6,10 @@
 # Set resource requirements: Queues are limited to seven day allocations
 # Time format: HH:MM:SS
 #SBATCH --nodelist=watgpu208
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --mem=10GB
 #SBATCH --cpus-per-task=1
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:3
 
 # Set output file destinations (optional)
 # By default, output will appear in a file in the submission directory:
@@ -24,37 +24,29 @@
 # Set types of notifications (from the options: BEGIN, END, FAIL, REQUEUE, ALL):
 #SBATCH --mail-type=ALL
 
-
-task_config=configs/tasks/belebele.yaml
-model_path=configs/models
-batch_size=4
-task="belebele"
+task_config=configs/tasks/post-training-eval/global-mmlu-math.yaml
+model_path=configs/models/post_training
+batch_size=auto
+task=global-mmlu-math
 
 declare -a models
-export CUDA_VISIBLE_DEVICES=0,1,2
+export CUDA_VISIBLE_DEVICES=7
 export TRUST_REMOTE_CODE=True
-# HF_HOME=/jarmy/odunayoogundepo/jubilant-sniffle/cache
-# TRANSFORMERS_CACHE=${HF_HOME}
-# WANDB_DIR=${HF_HOME}
 
 models=(
-    # "afriteva_v2_large_ayaft"
+    # "meta_llama_8b_base"
+    # "persona_llama70b_math_10k_llama_3_8b_instruct"
+    # "persona_math_10k_llama_3_8b_base"
+    # "persona_math_10k_lugha_llama_8b_wura_math"
+    # "persona_llama70b_math_10k_llama_3_8b_base"
+    # "persona_llama70b_math_10k_lughallama_8b_wura_math"
+    # "persona_math_10k_llama_3_8b_instruct"
     # "meta_llama_8b_instruct"
-    "meta_llama_70b_instruct"
-    # "lugh_llama"
-    # "meta_llama_3_1_8b_instruct"
-    # "meta_llama-2_7b_chat"
-    # "aya_101"
-    # "lelapa_inkuba_0_4b"
-    # "bigscience_mt0_xl"
-    # "bigscience_mt0_xxl"
+    # "lugha_llama_math"
     # "google_gemma-1_7b_it"
-    # "google_gemma-2_27b_it"
-    # "jacaranda_afrollama"
-    # "llamax_8b"
-    # "google_gemma-2_9b_it"
+    # "grade_school_math_llama_3_8b_base_no_instruction_mask"
+    "grade_school_math_llama_3_8b_base_no_instruction_mask_20k"
 )
-
 
 for num_fewshot_samples in 0
 do 

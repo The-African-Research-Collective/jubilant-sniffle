@@ -1,0 +1,8 @@
+model_name: meta-llama/Meta-Llama-3-8B-instruct
+revision: main
+trust_remote_code: false
+parallelize: false
+add_bos_token: false
+model_type: hf
+languages_supported:
+  - eng

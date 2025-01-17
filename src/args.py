@@ -62,6 +62,7 @@ class ModelConfig(BaseConfig):
     model_name: str = field(default="default_model")
     languages_supported: List[str] = field(default_factory=list)
     model_type: str = field(default="hf")
+    revision: str = field(default="main")
     trust_remote_code: bool = field(default=False)
     parallelize: bool = field(default=False)
     add_bos_token: bool = field(default=False)
@@ -86,7 +87,7 @@ class EvaluationConfig(BaseConfig):
         limit (int): The limit for evaluation. Default is -1.
     """
     split_tasks: bool = field(default=False)
-    batch_size: str = field(default="auto")
+    batch_size: str = field(default="1")
     max_batch_size: int = field(default=8)
     num_fewshot: int = field(default=0)
     random_seed: int = field(default=42)

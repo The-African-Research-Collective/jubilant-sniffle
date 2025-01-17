@@ -1,0 +1,23 @@
+task_name: afrimmlu_math
+task_template: afrimmlu_math_{{language}}
+wandb_project: post_training_african_languages_afrimmlu_math
+wandb_job_type: eval
+languages:
+  - amh
+  - eng
+  - ewe
+  - fra
+  - hau
+  - ibo
+  - kin
+  - lin
+  - lug
+  - orm
+  - sna
+  - sot
+  - swa
+  - twi
+  - wol
+  - xho
+  - yor
+  - zul

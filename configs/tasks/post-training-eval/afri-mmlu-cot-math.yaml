@@ -1,0 +1,13 @@
+task_name: afrimmlu_math_cot
+task_template: afrimmlu_math_cot_{{language}}
+wandb_project: post_training_african_languages_afrimmlu_math_cot
+wandb_job_type: eval
+languages:
+  - eng
+  - amh
+  - fra
+  - hau
+  - ibo
+  - swa
+  - yor
+  - zul

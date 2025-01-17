@@ -29,32 +29,33 @@
 
 task_config=configs/tasks/nollysenti.yaml
 model_path=configs/models
-batch_size=4
+batch_size=8
+task="nollysenti"
 
 declare -a models
-export CUDA_VISIBLE_DEVICES=2
-HF_HOME=/jarmy/odunayoogundepo/jubilant-sniffle/cache
-TRANSFORMERS_CACHE=${HF_HOME}
-WANDB_DIR=${HF_HOME}
+export CUDA_VISIBLE_DEVICES=5
+# HF_HOME=/jarmy/odunayoogundepo/jubilant-sniffle/cache
+# TRANSFORMERS_CACHE=${HF_HOME}
+# WANDB_DIR=${HF_HOME}
 
 models=(
     # "afriteva_v2_large_ayaft"
     # "meta_llama_8b_instruct"
     # "meta_llama_70b_instruct"
-    "meta_llama_3_1_8b_instruct.yaml"
+    # "meta_llama_3_1_8b_instruct.yaml"
     # "meta_llama-2_7b_chat"
     # "aya_101"
     # "lelapa_inkuba_0_4b"
     # "bigscience_mt0_xl"
     # "bigscience_mt0_xxl"
-    # "google_gemma-1_7b_it"
+    "google_gemma-1_7b_it"
     # "google_gemma-2_27b_it"
     # "jacaranda_afrollama"
-    "llamax_8b"
+    # "llamax_8b"
 )
 
 
-for num_fewshot_samples in 0 5
+for num_fewshot_samples in 0
 do 
     for model in "${models[@]}"
     do
@@ -63,6 +64,7 @@ do
         python src/evaluate.py --model-config-yaml ${model_path}/${model}.yaml \
         --task-config-yaml ${task_config} \
         --eval.num-fewshot ${num_fewshot_samples} \
-        --eval.batch-size ${batch_size} 
+        --eval.batch-size ${batch_size} \
+        --run-dir runs/${task}/${model}
     done
 done

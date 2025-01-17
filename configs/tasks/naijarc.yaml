@@ -1,0 +1,8 @@
+task_name: naijarc
+task_template: naijarc_{{language}}_prompt_1,naijarc_{{language}}_prompt_2,naijarc_{{language}}_prompt_3,naijarc_{{language}}_prompt_4,naijarc_{{language}}_prompt_5
+wandb_project: afribench-naijarc
+wandb_job_type: eval
+languages:
+  - hau
+  - ibo
+  - yor

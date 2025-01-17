@@ -1,0 +1,8 @@
+model_name: taresco/persona_llama70b_math_10k_llama_3_8b_base
+revision: persona_llama70b_math_10k_llama_3_8b_base__42__1736608125__hub
+trust_remote_code: true
+parallelize: false
+add_bos_token: false
+model_type: hf
+languages_supported:
+  - eng

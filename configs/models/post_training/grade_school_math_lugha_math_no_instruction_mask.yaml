@@ -1,0 +1,8 @@
+model_name: /home/oogundep/runs/persona_math_10k_lugha_llama_8b_wura_math_no_instruction_mask
+revision: main
+trust_remote_code: true
+parallelize: false
+add_bos_token: false
+model_type: hf
+languages_supported:
+  - eng

@@ -1,0 +1,14 @@
+task_name: afrimgsm_direct
+task_template: afrimgsm_direct_{{language}}
+wandb_project: post_training_african_languages
+wandb_job_type: eval
+languages:
+  - hau
+  # - yor
+  # - ibo
+  # - hau
+  # - swa
+  # - zul
+  # - eng
+  # - fra
+

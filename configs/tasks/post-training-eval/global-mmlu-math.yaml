@@ -1,0 +1,12 @@
+task_name: global_mmlu_math
+task_template: global_mmlu_math_{{language}}
+wandb_project: post_training_african_languages_global_mmlu_math
+wandb_job_type: eval
+languages:
+  - am
+  - ar
+  - en
+  - ha
+  - ig
+  - sw
+  - yo

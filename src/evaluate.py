@@ -87,6 +87,7 @@ def main():
             fewshot_random_seed=config.eval.fewshot_random_seed,
             write_out=config.eval.write_out,
             limit=config.eval.limit,
+            # apply_chat_template=True
         )
 
         configs.update(results["configs"])
