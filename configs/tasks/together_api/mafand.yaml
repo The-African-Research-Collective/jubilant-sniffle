@@ -1,10 +1,11 @@
 task_name: mafand
-task_template: mafand_{{language}}_prompt_1,mafand_{{language}}_prompt_2,mafand_{{language}}_prompt_3,mafand_{{language}}_prompt_4,mafand_{{language}}_prompt_5
+task_template: mafand_{{language}}_prompt_1,mafand_{{language}}_prompt_2,mafand_{{language}}_prompt_3
 wandb_project: afribench-mafand
 wandb_job_type: eval
-prompt_directory: runs/mafand/prompts
+prompt_directory: runs/mafand_fewshot/prompts
 hub_dataset: masakhane/mafand
 evaluation_split: test
+fewshot_split: validation
 languages:
   - en_amh
   - fr_bam
