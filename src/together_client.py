@@ -1,10 +1,12 @@
 import os
+import time
 import asyncio
 from dataclasses import dataclass
 from typing import List, Any, Optional, Dict
 from together import AsyncTogether
 from enum import Enum
 from dotenv import load_dotenv
+from tenacity import stop_after_attempt, wait_exponential, retry
 
 load_dotenv()
 
@@ -17,7 +19,7 @@ class BatchRequest:
     timeout: int = 30000
     retry_attempts: int = 3
     retry_delay: float = 1.0
-    max_tokens: Optional[int] = None
+    max_tokens: Optional[int] = 512
 
 
 class TogetherAPIError(Exception):
@@ -63,6 +65,7 @@ class AsyncBatchClient:
         else:
             raise TogetherAPIError(status_code, ErrorCode.get_error_message(status_code))
 
+    @retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=5, max=10))
     async def _process_single_request(self, message: str, model: str, max_tokens: Optional[int], attempt: int = 0) -> Any:
         try:
             return await self.client.chat.completions.create(
@@ -70,6 +73,7 @@ class AsyncBatchClient:
                 messages=[{"role": "user", "content": message}],
                 max_tokens=max_tokens
             )
+            time.sleep(1)
         except Exception as e:
             status_code = getattr(e, 'status', 500)
             
