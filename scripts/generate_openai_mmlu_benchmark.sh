@@ -33,8 +33,6 @@ model_path=configs/models
 batch_size=auto
 task="openai_mmlu"
 
-declare -a models
-
 models=(
     "meta_llama_8b_instruct"
     "meta_llama_3_1_8b_instruct.yaml"

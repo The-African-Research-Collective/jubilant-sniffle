@@ -57,10 +57,12 @@ do
     for model in "${models[@]}"
     do
         echo "Running model: $model"
+        mkdir -p runs/${task}/${model}
 
         python src/evaluate.py --model-config-yaml ${model_path}/${model}.yaml \
         --task-config-yaml ${task_config} \
         --eval.num-fewshot ${num_fewshot_samples} \
-        --eval.batch-size ${batch_size} 
+        --eval.batch-size ${batch_size} \
+        --run-dir runs/${task}/${model}
     done
 done

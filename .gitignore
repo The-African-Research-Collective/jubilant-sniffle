@@ -1,6 +1,5 @@
 runs/
 wandb/
-slurm_logs/
 artifacts/
 task_logs/
 
