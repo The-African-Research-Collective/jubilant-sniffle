@@ -1,18 +1,30 @@
 #!/bin/bash
+
+#==============================================================================#
+# To be submitted to the SLURM queue with the command:
+# sbatch batch-submit.sh
+
 # Set resource requirements: Queues are limited to seven day allocations
 # Time format: HH:MM:SS
-#SBATCH --time=80:00:00
-#SBATCH --mem=128GB
-#SBATCH --cpus-per-task=4
-#SBATCH --gres=gpu:1
-#SBATCH --partition=SCHOOL
-#SBATCH -o slurm_logs/JOB%j.out
-#SBATCH -e slurm_logs/JOB%j-err.out
+#SBATCH --nodelist=watgpu208
+#SBATCH --time=48:00:00
+#SBATCH --mem=10GB
+#SBATCH --cpus-per-task=1
+#SBATCH --gres=gpu:3
 
-# Set types of notifications (from the options: BEGIN, END, FAIL, REQUEUE, ALL)
+# Set output file destinations (optional)
+# By default, output will appear in a file in the submission directory:
+# slurm-$job_number.out
+# This can be changed:
+#SBATCH -o slurm_logs/JOB%j.out # File to which STDOUT will be written
+#SBATCH -e slurm_logs/JOB%j-err.out # File to which STDERR will be written
+
+# email notifications: Get email when your job starts, stops, fails, completes...
+# Set email address
+#SBATCH --mail-user=ogundepoodunayo@gmail.com
+# Set types of notifications (from the options: BEGIN, END, FAIL, REQUEUE, ALL):
 #SBATCH --mail-type=ALL
-
-# set -e;
+#==============================================================================#
 
 {
     export WANDB_ENTITY="african-research-collective"
@@ -20,10 +32,6 @@
     task="masakhanews"
     model_path=configs/models
     batch_size=auto
-
-    # declare -a models
-    # export CUDA_VISIBLE_DEVICES=1
-    export TRUST_REMOTE_CODE=true
 
     single_gpu_models=(
         # "meta_llama-2_7b_chat"

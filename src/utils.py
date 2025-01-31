@@ -88,59 +88,59 @@ def _get_config(results) -> Dict[str, Any]:
     return configs
 
 
-def log_eval_samples(run, results, task_names: list[str] = None) -> None:
-        """Log evaluation samples to W&B.
+def log_eval_samples(run, results, task_names: list[str] = None):
+    """Log evaluation samples to W&B.
 
-        Args:
-            samples (Dict[str, List[Dict[str, Any]]]): Evaluation samples for each task.
-        """
-        samples = results["samples"]
+    Args:
+        samples (Dict[str, List[Dict[str, Any]]]): Evaluation samples for each task.
+    """
+    samples = results["samples"]
 
-        if task_names is None:
-            task_names: List[str] = list(results.get("results", {}).keys())
+    if task_names is None:
+        task_names: List[str] = list(results.get("results", {}).keys())
+    
+    group_names: List[str] = list(results.get("groups", {}).keys())
+    configs = _get_config(results)
+
+    task_names: List[str] = [
+        x for x in task_names if x not in group_names
+    ]
+
+    ungrouped_tasks = []
+    tasks_by_groups = {}
+
+    for task_name in task_names:
+        group_names = configs['task_configs'][task_name].get("group", None)
         
-        group_names: List[str] = list(results.get("groups", {}).keys())
-        configs = _get_config(results)
+        if group_names:
+            if isinstance(group_names, str):
+                group_names = [group_names]
 
-        task_names: List[str] = [
-            x for x in task_names if x not in group_names
-        ]
+            for group_name in group_names:
+                if not tasks_by_groups.get(group_name):
+                    tasks_by_groups[group_name] = [task_name]
+                else:
+                    tasks_by_groups[group_name].append(task_name)
+        else:
+            ungrouped_tasks.append(task_name)
 
-        ungrouped_tasks = []
-        tasks_by_groups = {}
+    for task_name in ungrouped_tasks:
+        eval_preds = samples[task_name]
 
-        for task_name in task_names:
-            group_names = configs['task_configs'][task_name].get("group", None)
-            
-            if group_names:
-                if isinstance(group_names, str):
-                    group_names = [group_names]
+        # log the samples as a W&B Table
+        df = WandbLogger()._generate_dataset(eval_preds, configs['task_configs'].get(task_name))
+        run.log({f"{task_name}_eval_results": df})
 
-                for group_name in group_names:
-                    if not tasks_by_groups.get(group_name):
-                        tasks_by_groups[group_name] = [task_name]
-                    else:
-                        tasks_by_groups[group_name].append(task_name)
-            else:
-                ungrouped_tasks.append(task_name)
-
-        for task_name in ungrouped_tasks:
+    for group, grouped_tasks in tasks_by_groups.items():
+        grouped_df = pd.DataFrame()
+        
+        for task_name in grouped_tasks:
             eval_preds = samples[task_name]
+            df = WandbLogger()._generate_dataset(
+                eval_preds, configs['task_configs'].get(task_name)
+            )
+            df["group"] = group
+            df["task"] = task_name
+            grouped_df = pd.concat([grouped_df, df], ignore_index=True)
 
-            # log the samples as a W&B Table
-            df = WandbLogger()._generate_dataset(eval_preds, configs['task_configs'].get(task_name))
-            run.log({f"{task_name}_eval_results": df})
-
-        for group, grouped_tasks in tasks_by_groups.items():
-            grouped_df = pd.DataFrame()
-            
-            for task_name in grouped_tasks:
-                eval_preds = samples[task_name]
-                df = WandbLogger()._generate_dataset(
-                    eval_preds, configs['task_configs'].get(task_name)
-                )
-                df["group"] = group
-                df["task"] = task_name
-                grouped_df = pd.concat([grouped_df, df], ignore_index=True)
-
-            run.log({f"{group}_eval_results": grouped_df})
+        run.log({f"{group}_eval_results": grouped_df})
