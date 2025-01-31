@@ -48,6 +48,7 @@ class TaskConfig(BaseConfig):
     hub_dataset: str = field(default=None)
     evaluation_split: str = field(default=None)
     fewshot_split: str = field(default=None)
+    fewshot_random_seed: int = field(default=42)
 
 @dataclass_json
 @dataclass

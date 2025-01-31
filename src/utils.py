@@ -10,6 +10,34 @@ from lm_eval.loggers import WandbLogger
 
 logger = logging.getLogger(__name__)
 REQUIRED_ENV_VARS = ['CUDA_VISIBLE_DEVICES']
+MAFAND_CODE_2_LANG = {
+    "en": "English",
+    "amh": "Amharic",
+    "fr": "French",
+    "bam": "Bambara",
+    "lug": "Luganda",
+    "luo": "Luo",
+    "kin": "Kinyarwanda",
+    "tsn": "Setswana",
+    "pcm": "Nigerian Pidgin",
+    "zul": "Zulu",
+    "swa": "Swahili",
+    "hau": "Hausa",
+    "ibo": "Igbo",
+    "yor": "Yoruba",
+    "mos": "Mossi",
+    "nya": "Chichewa",
+    "bbj": "Ghomala",
+    "wol": "Wolof",
+    "twi": "Twi",
+    "fon": "Fon",
+    "sna": "Shona",
+    "xho": "Xhosa",
+    "ewe": "Ewe",
+}
+
+
+
 
 def check_env_file_and_vars(env_file='.env'):
     # Check if the .env file exists
