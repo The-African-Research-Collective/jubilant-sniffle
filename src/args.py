@@ -44,6 +44,11 @@ class TaskConfig(BaseConfig):
     task_template: str = field(default="")
     wandb_project: str = field(default="default_project")
     wandb_job_type: str = field(default="eval")
+    prompt_directory: str = field(default=None)
+    hub_dataset: str = field(default=None)
+    evaluation_split: str = field(default=None)
+    fewshot_split: str = field(default=None)
+    fewshot_random_seed: int = field(default=42)
 
 @dataclass_json
 @dataclass
@@ -63,6 +68,7 @@ class ModelConfig(BaseConfig):
     languages_supported: List[str] = field(default_factory=list)
     model_type: str = field(default="hf")
     trust_remote_code: bool = field(default=False)
+    revision: str = field(default=None)
     parallelize: bool = field(default=False)
     add_bos_token: bool = field(default=False)
 
