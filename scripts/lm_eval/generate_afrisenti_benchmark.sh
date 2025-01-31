@@ -28,12 +28,10 @@
 
 NUM_FEWSHOT=$1 # Number of fewshot samples
 
-task_config=configs/tasks/nollysenti.yaml
+task_config=configs/tasks/afrisenti.yaml
 model_path=configs/models
-batch_size=4
-task="nollysenti"
-
-declare -a models
+batch_size=auto
+task="afrisenti"
 
 models=(
     "meta_llama_8b_instruct"
