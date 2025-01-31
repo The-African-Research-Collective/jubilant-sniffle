@@ -1,12 +1,13 @@
+"""
+"""
+
 import os
 import json
 import asyncio
-import wandb
 import logging
 import pandas as pd
 
 from datasets import load_dataset
-from transformers import AutoTokenizer
 from string import Template
 from typing import List
 from copy import copy
@@ -14,7 +15,6 @@ from args import load_config
 from utils import generate_lang_task_list, MAFAND_CODE_2_LANG
 from processing_queue import MessageQueue
 from tqdm import tqdm
-from collections import defaultdict
 import evaluate
 
 
@@ -153,46 +153,6 @@ async def main():
     
         stats = await queue.process_queue(model_name=config.model.model_name)
         logger.info(f"Run Stats: {stats}")
-    
-    # # Evaluate the model
-    # samples = defaultdict(list)
-    
-    # for dataset, prompt_columns in processed_datasets:
-    #     for column in prompt_columns:
-
-    #         batch_hash = []
-    #         for batch_data, batch_translation in zip(batch_iterable(dataset[column]), batch_iterable(dataset['translation'])):
-    #             for i in range(len(batch_data)):
-    #                 batch_hash.append(queue._hash_message(batch_data[i]))
-
-    #             results = await queue.get_batch_results(batch_hash)
-
-    #             for i, (hash, translation) in enumerate(zip(batch_hash, batch_translation)):
-    #                 hash_result = results.get(hash, None)
-
-
-    #                 if hash_result:
-    #                     model_translation = hash_result['result']
-    #                     ground_truth = translation[hash_result['translation_direction'].split('_')[-1]]
-
-    #                     sample_res = {
-    #                         "model_translation": model_translation,
-    #                         "ground_truth": ground_truth,
-    #                         "hash": hash,
-    #                         "translation_direction": hash_result['translation_direction'],
-    #                         "prompt_type": hash_result['prompt_type'],
-    #                         "prompt": hash_result['content']
-    #                     }
-
-    #                     for metric in METRIC_MAPPING:
-    #                         results = METRIC_MAPPING[metric].compute(predictions=[model_translation], references=[[ground_truth]])
-    #                         sample_res[metric] = results
-
-    #                     samples[column].append(sample_res)
-
-    # with open('samples.json', 'w') as f:
-    #     json.dump(samples, f, indent=4, ensure_ascii=True)
-
    
 if __name__ == "__main__":
     asyncio.run(main())

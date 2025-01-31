@@ -1,14 +1,13 @@
 import json
 import os
-
 import wandb
 import lm_eval
 import logging
 import pandas as pd
 from lm_eval.loggers.utils import _handle_non_serializable
 
-from args import load_config
-from utils import build_model_input_string, generate_lang_task_list, log_eval_samples
+from src.args import load_config
+from src.utils import build_model_input_string, generate_lang_task_list, log_eval_samples
 
 lm_eval_logger = logging.getLogger("lm_eval")
 lm_eval_logger.setLevel(logging.ERROR)

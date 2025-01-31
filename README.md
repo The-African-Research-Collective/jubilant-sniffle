@@ -1,4 +1,4 @@
-# LLM Evaluation for African Languages
+# LLM Eval Suite for African Languages
 
 ## Setup
 
@@ -20,7 +20,7 @@ This project is aimed at creating a standard evaluation library and scripts for 
 
 ## Tasks
 
-### Multiple Choice Tasks
+### Multiple Choice Tasks (Accuracy)
 
 Multiple choice tasks are tasks where the model is given a prompt and a list of options to choose from. The model is expected to select the correct option from the list of options. The tasks that we evaluate in this Category are:
 
@@ -41,9 +41,29 @@ Multiple choice tasks are tasks where the model is given a prompt and a list of 
 
 
 - AfriXNLI : 
-- BeleBele : 
+- BeleBele :
 
-### How does LM-Harness evaluate multiple choice tasks?
+### Mathematics Reasoning (Exact Match)
+
+...
+
+### Text Classification (F1 Score)
+
+...
+
+### Token Classification (F1 Score)
+
+...
+
+### Question Answering (Rouge)
+
+...
+
+### Summarization (Rouge)
+
+...
+
+## How does LM-Harness evaluate multiple choice tasks?
 
 For multiple-choice questions, in the log-probability mode, the framework creates a set of input and output pairs using the input prompt and check the probablity of generation of each of the choices. The choice with the highest probability is selected as the answer. The framework selects the choice with the highest probability as the answer and checks if it is the correct answer. This approach is [detailed in this blog post](https://blog.eleuther.ai/multiple-choice-normalization/)
 
