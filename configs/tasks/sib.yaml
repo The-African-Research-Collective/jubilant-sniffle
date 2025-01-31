@@ -7,7 +7,13 @@ languages:
   - amh
   - ary
   - arz
+  - aeb
+  - aka
+  - bem
   - bam
+  - cjk
+  - dik
+  - dyu
   - eng
   - ewe
   - fon
@@ -24,12 +30,6 @@ languages:
   - xho
   - yor
   - zul
-  - aeb
-  - aka
-  - bem
-  - cjk
-  - dik
-  - dyu
   - fuv
   - gaz
   - kab
