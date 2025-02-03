@@ -1,15 +1,17 @@
 import os
 import logging
-import pandas as pd
-
-from args import ModelConfig, TaskConfig
-from typing import List, Dict, Any
 from collections import defaultdict
+from typing import List, Dict, Any
+
+import pandas as pd
 from lm_eval.loggers import WandbLogger
+
+from afrobench_eval_suite.args import ModelConfig, TaskConfig
 
 
 logger = logging.getLogger(__name__)
 REQUIRED_ENV_VARS = ['CUDA_VISIBLE_DEVICES']
+
 
 def check_env_file_and_vars(env_file='.env'):
     # Check if the .env file exists
@@ -27,6 +29,7 @@ def check_env_file_and_vars(env_file='.env'):
 
     logger.info(f"All required environment variables are present in {env_file}.")
 
+
 def build_model_input_string(model_args: ModelConfig):
     """
     Builds a string representation of the model input based on the provided ModelConfig.
@@ -41,8 +44,11 @@ def build_model_input_string(model_args: ModelConfig):
     if model_args.trust_remote_code:
         output_string += "trust_remote_code=True,"
     
-    if model_args.parallelize:
+    if model_args.model_type != "vllm" and model_args.parallelize:
         output_string += "parallelize=True,"
+    
+    if model_args.model_type == "vllm" and model_args.vllm:
+        output_string += ",".join([f"{key}={value}" for key, value in model_args.vllm.items()]) + ","
     
     if model_args.add_bos_token:
         output_string += "add_bos_token=True,"
@@ -75,6 +81,7 @@ def generate_lang_task_list(task_config: TaskConfig) -> List[str]:
             language_2_task[lang].append(template.replace("{{language}}", lang))
     
     return lang_task_list, language_2_task
+
 
 def _get_config(results) -> Dict[str, Any]:
     """Get configuration parameters."""

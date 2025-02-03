@@ -1,12 +1,13 @@
-import os
-
-from dataclasses import dataclass, field
-from dataclasses_json import dataclass_json
 import argparse
+import os
 import yaml
 from typing import List, Optional, Type, TypeVar
 
+from dataclasses import dataclass, field
+from dataclasses_json import dataclass_json
+
 T = TypeVar('T', bound='BaseConfig')
+
 
 @dataclass_json
 @dataclass
@@ -45,6 +46,7 @@ class TaskConfig(BaseConfig):
     wandb_project: str = field(default="default_project")
     wandb_job_type: str = field(default="eval")
 
+
 @dataclass_json
 @dataclass
 class ModelConfig(BaseConfig):
@@ -65,6 +67,8 @@ class ModelConfig(BaseConfig):
     trust_remote_code: bool = field(default=False)
     parallelize: bool = field(default=False)
     add_bos_token: bool = field(default=False)
+    vllm: dict = field(default_factory=dict)
+
 
 @dataclass_json
 @dataclass
@@ -177,6 +181,7 @@ class ScriptConfig(BaseConfig):
             os.makedirs(config.run_dir, exist_ok=True)
         
         return config
+
 
 def load_config() -> ScriptConfig:
     return ScriptConfig.from_args()
