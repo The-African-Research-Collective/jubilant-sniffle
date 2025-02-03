@@ -62,6 +62,15 @@ def main():
         samples = {}
         configs = {}
     
+    model = lm_eval.api.registry.get_model(config.model.model_type).create_from_arg_string(
+        input_model_string,
+        {
+            "batch_size": config.eval.batch_size,
+            "max_batch_size": config.eval.max_batch_size,
+            "device": None,
+        },
+    )
+
     for task_or_task_list in task_list:
         # Filter out tasks we already have results for
         if metrics_df is not None:
@@ -72,9 +81,9 @@ def main():
 
         if not task_or_task_list:
             continue
-
+    
         results = lm_eval.simple_evaluate(
-            model=config.model.model_type,
+            model=model,
             model_args=input_model_string,
             tasks=task_or_task_list,
             log_samples=config.eval.log_samples,
