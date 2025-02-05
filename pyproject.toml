@@ -1,9 +1,12 @@
 [tool.poetry]
-name = "afrilm-leaderboard"
+name = "afrobench-eval-suite"
 version = "0.1.0"
 description = ""
 authors = ["Ogundepo Odunayo <ogundepoodunayo@gmail.com>"]
 readme = "README.md"
+packages = [
+    { include = "afrobench_eval_suite", from = "src" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -15,6 +18,8 @@ wandb = "^0.18.3"
 sentencepiece = "^0.2.0"
 python-dotenv = "^1.0.1"
 
+[tool.poetry.scripts]
+afrobench = "afrobench_eval_suite.evaluate:main"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"
